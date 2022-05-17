@@ -1,0 +1,143 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    NEWLINE
+    SELF
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> classes
+Rule 2     classes -> class
+Rule 3     classes -> class classes
+Rule 4     class -> CLASS TYPE inheritance BLOCK_INIT features_opt BLOCK_END SEMICOLON
+Rule 5     inheritance -> INHERITS TYPE
+Rule 6     inheritance -> empty
+Rule 7     features_opt -> features
+Rule 8     features_opt -> empty
+Rule 9     features -> feature
+Rule 10    features -> feature features
+Rule 11    feature -> ID PARENTESIS_INIT formals_opt PARENTESIS_END COLON TYPE { expr } SEMICOLON
+Rule 12    feature -> attr_def SEMICOLON
+Rule 13    attr_defs -> attr_def
+Rule 14    attr_defs -> attr_def COMMA attr_defs
+Rule 15    attr_def -> ID COLON TYPE assign_opt
+Rule 16    assign_opt -> assign
+Rule 17    assign_opt -> empty
+Rule 18    assign -> ASSIGN expr
+Rule 19    formals_opt -> formals
+Rule 20    formals_opt -> empty
+Rule 21    formals -> formal
+Rule 22    formals -> formal COMMA formals
+Rule 23    formal -> ID COLON TYPE
+Rule 24    params_opt -> params
+Rule 25    params_opt -> empty
+Rule 26    params -> expr
+Rule 27    params -> expr COMMA params
+Rule 28    block -> blockelements
+Rule 29    blockelements -> expr SEMICOLON
+Rule 30    blockelements -> expr SEMICOLON blockelements
+Rule 31    function_call -> ID PARENTESIS_INIT params_opt PARENTESIS_END
+Rule 32    targettype_opt -> targettype
+Rule 33    targettype_opt -> empty
+Rule 34    targettype -> AT TYPE
+Rule 35    expr -> ID assign
+Rule 36    expr -> expr targettype_opt DOT function_call
+Rule 37    expr -> function_call
+Rule 38    expr -> IF expr THEN expr ELSE expr FI
+Rule 39    expr -> WHILE expr LOOP expr POOL
+Rule 40    expr -> LET attr_defs IN expr
+Rule 41    expr -> CASE expr OF typeactions ESAC
+Rule 42    expr -> NEW TYPE
+Rule 43    expr -> INT_COMP expr
+Rule 44    expr -> NOT expr
+Rule 45    expr -> ISVOID expr
+Rule 46    expr -> expr PLUS expr
+Rule 47    expr -> expr MINUS expr
+Rule 48    expr -> expr MULTIPLY expr
+Rule 49    expr -> expr DIVIDE expr
+Rule 50    expr -> expr LESS_THAN expr
+Rule 51    expr -> expr LESS_THAN_OR_EQUAL expr
+Rule 52    expr -> expr EQUAL expr
+Rule 53    expr -> BLOCK_INIT block BLOCK_END
+Rule 54    expr -> PARENTESIS_INIT expr PARENTESIS_END
+Rule 55    expr -> ID
+Rule 56    expr -> INTEGER
+Rule 57    expr -> STRING
+Rule 58    empty -> <empty>
+
+Terminals, with rules where they appear
+
+ASSIGN               : 18
+AT                   : 34
+BLOCK_END            : 4 53
+BLOCK_INIT           : 4 53
+CASE                 : 41
+CLASS                : 4
+COLON                : 11 15 23
+COMMA                : 14 22 27
+DIVIDE               : 49
+DOT                  : 36
+ELSE                 : 38
+EQUAL                : 52
+ESAC                 : 41
+FI                   : 38
+ID                   : 11 15 23 31 35 55
+IF                   : 38
+IN                   : 40
+INHERITS             : 5
+INTEGER              : 56
+INT_COMP             : 43
+ISVOID               : 45
+LESS_THAN            : 50
+LESS_THAN_OR_EQUAL   : 51
+LET                  : 40
+LOOP                 : 39
+MINUS                : 47
+MULTIPLY             : 48
+NEW                  : 42
+NEWLINE              : 
+NOT                  : 44
+OF                   : 41
+PARENTESIS_END       : 11 31 54
+PARENTESIS_INIT      : 11 31 54
+PLUS                 : 46
+POOL                 : 39
+SELF                 : 
+SEMICOLON            : 4 11 12 29 30
+STRING               : 57
+THEN                 : 38
+TYPE                 : 4 5 11 15 23 34 42
+WHILE                : 39
+error                : 
+{                    : 11
+}                    : 11
+
+Nonterminals, with rules where they appear
+
+assign               : 16 35
+assign_opt           : 15
+attr_def             : 12 13 14
+attr_defs            : 14 40
+block                : 53
+blockelements        : 28 30
+class                : 2 3
+classes              : 1 3
+empty                : 6 8 17 20 25 33
+expr                 : 11 18 26 27 29 30 36 38 38 38 39 39 40 41 43 44 45 46 46 47 47 48 48 49 49 50 50 51 51 52 52 54
+feature              : 9 10
+features             : 7 10
+features_opt         : 4
+formal               : 21 22
+formals              : 19 22
+formals_opt          : 11
+function_call        : 36 37
+inheritance          : 4
+params               : 24 27
+params_opt           : 31
+program              : 0
+targettype           : 32
+targettype_opt       : 36
+typeactions          : 41
+
