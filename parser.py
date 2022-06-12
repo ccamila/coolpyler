@@ -5,12 +5,13 @@
 # Yacc example
 
 import ply.yacc as yacc
-import logging
-log = logging.getLogger('ply')
+
 
 # Get the token map from the lexer.  This is required.
 import lexer
-import ast
+
+import ast_helper as ast
+
 
 tokens = lexer.tokens
 
@@ -28,32 +29,26 @@ tokens = lexer.tokens
 # All binary operations are left-associative, with the exception of assignment, which is right-associative,
 # and the three comparison operations, which do not associate
 
-precedence = (
-    ('right', 'ASSIGN'),
-    ('left', 'NOT'), # WIP: eh realmente left?
-    ('nonassoc', 'LESS_THAN_OR_EQUAL', 'LESS_THAN', 'EQUAL' ),  # Nonassociative operators
-    ('left', 'PLUS', 'MINUS'),
-    ('left', 'MULTIPLY', 'DIVIDE'),
-    ('left', 'ISVOID'), 
-    ('left', 'INT_COMP'),
-    ('left', 'AT'),
-    ('left', 'DOT')  
-)
 def p_program(p):
     """program : classes"""
+    
     p[0] = p[1]
 
 def p_classes(p):
     """classes : class
                | class classes"""
+               
     if len(p) == 2:
         p[0] = (p[1],)
     elif len(p) == 3:
         p[0] = (p[1],) + p[2]
+    else:
+        raise SyntaxError('Invalid number of symbols')
 
 def p_class(p):
     """class : CLASS TYPE inheritance BLOCK_INIT features_opt BLOCK_END SEMICOLON"""
-    p[0] = ('class_type', 'name', p[2], 'inherits', p[3], 'features', p[5]) # ast.Type(name=p[2], inherits=p[3], features=p[5])
+    
+    p[0] = ast.Type(name=p[2], inherits=p[3], features=p[5])
 
 def p_inheritance(p):
     """inheritance : INHERITS TYPE
@@ -69,7 +64,7 @@ def p_features_opt(p):
     """features_opt : features
                     | empty"""
     if p.slice[1].type == 'empty':
-        p[0] = tuple()
+        p[0] = []
     else:
         p[0] = p[1]
 
@@ -77,9 +72,9 @@ def p_features(p):
     """features : feature
                 | feature features"""
     if len(p) == 2:
-        p[0] = (p[1],)
+        p[0] = [p[1]]
     elif len(p) == 3:
-        p[0] = (p[1],) + p[2]
+        p[0] = [p[1]] + p[2]
     else:
         raise SyntaxError('Invalid number of symbols')
 
@@ -87,7 +82,7 @@ def p_feature(p):
     """feature : ID PARENTESIS_INIT formals_opt PARENTESIS_END COLON TYPE '{' expr '}' SEMICOLON
                | attr_def SEMICOLON"""
     if len(p) == 11:
-        p[0] = ('method', ('ident', p[1]), 'type', p[6], 'formals', p[3], 'expr', p[8]) # ast.Method(ident=ast.Ident(p[1]), type=p[6], formals=p[3], expr=p[8])
+        p[0] = ast.Method(ident=ast.Ident(p[1]), type=p[6], formals=p[3], expr=p[8])
     elif len(p) == 3:
         p[0] = p[1]
     else:
@@ -105,7 +100,7 @@ def p_attr_defs(p):
 
 def p_attr_def(p):
     """attr_def : ID COLON TYPE assign_opt"""
-    p[0] = ('attribute', ('ident', p[1]), 'type', p[3], 'expr', p[4]) # ast.Attribute(ident=ast.Ident(p[1]), type=p[3], expr=p[4])
+    p[0] = ast.Attribute(ident=ast.Ident(p[1]), type=p[3], expr=p[4])
 
 def p_assign_opt(p):
     """assign_opt : assign
@@ -136,7 +131,7 @@ def p_formals(p):
 
 def p_formal(p):
     """formal : ID COLON TYPE"""
-    p[0] =  ('formal', ('ident', p[1]), 'type', p[3]) #ast.Formal(ident=ast.Ident(p[1]), type=p[3])
+    p[0] = ast.Formal(ident=ast.Ident(p[1]), type=p[3])
 
 def p_params_opt(p):
     """params_opt : params
@@ -153,6 +148,8 @@ def p_params(p):
         p[0] = (p[1],)
     elif len(p) == 4:
         p[0] = (p[1],) + p[3]
+    else:
+        raise SyntaxError('Invalid number of symbols')    
 
 def p_block(p):
     """block : blockelements"""
@@ -165,11 +162,25 @@ def p_blockelements(p):
         p[0] = (p[1],)
     elif len(p) == 4:
         p[0] = (p[1],) + p[3]
+    else:
+        raise SyntaxError('Invalid number of symbols')    
+def p_typeactions(p):
+    """typeactions : typeaction
+                   | typeaction typeactions"""
+    if len(p) == 2:
+        p[0] = (p[1],)
+    elif len(p) == 3:
+        p[0] = (p[1],) + p[2]
+    else:
+        raise SyntaxError('Invalid number of symbols')
 
+def p_typeaction(p):
+    """typeaction : ID COLON TYPE ACTION expr SEMICOLON"""
+    p[0] = ast.TypeAction(ident=ast.Ident(p[1]), type=p[3], expr=p[5])
 
 def p_function_call(p):
     """function_call : ID PARENTESIS_INIT params_opt PARENTESIS_END"""
-    p[0] = ('function_call', ('ident', p[1]), 'params', p[3]) # ast.FunctionCall(ident=ast.Ident(p[1]), params=p[3])
+    p[0] = ast.FunctionCall(ident=ast.Ident(p[1]), params=p[3])
 
 def p_targettype_opt(p):
     """targettype_opt : targettype
@@ -179,6 +190,10 @@ def p_targettype_opt(p):
 def p_targettype(p):
     """targettype : AT TYPE"""
     p[0] = p[2]
+
+def p_expr_self(p):
+    """expr  : SELF"""
+    p[0] = ast.Self(ident=ast.Ident(p[1]))
     
 def p_expr(p):
     """expr : ID assign
@@ -205,6 +220,7 @@ def p_expr(p):
             | INTEGER
             | STRING
     """
+    
     first_token = p.slice[1].type
     second_token = p.slice[2].type if len(p) > 2 else None
     third_token = p.slice[3].type if len(p) > 3 else None
@@ -212,44 +228,44 @@ def p_expr(p):
     if first_token == 'ID':
 
         if second_token is None:
-            p[0] = ('assign', p[1])
+            p[0] = ast.Ident(p[1])
         
         elif second_token == 'assign':
-            p[0] = ('first-token', ('assign', p[1]), p[2])
+             p[0] = ast.Assign(ident=ast.Ident(p[1]), expr=p[2])
 
     elif first_token == 'expr':
         
         if len(p) == 4 and third_token == 'expr':
-            p[0] = ('first-token', p[2], p[1], p[3])
+            p[0] = ast.BinOp(operator=p[2], left=p[1], right=p[3])
         
         elif third_token == 'DOT':
-            p[0] = ('first-token', p[1], p[2], p[4])
+            p[0] = ast.MethodCall(object=p[1], targettype=p[2], method=p[4])
 
     elif first_token == 'function_call':
         p[0] = p[1]
 
     elif first_token == 'IF':
-        p[0] = ('first-token', p[2], p[4], p[6])
+        p[0] = ast.If(condition=p[2], true=p[4], false=p[6])
     
     elif first_token == 'WHILE':
-        p[0] = ('first-token', p[2], p[4])
+        p[0] = ast.While(condition=p[2], action=p[4])
     
     elif first_token == 'LET':
-        p[0] = ('first-token', p[2], p[4])
+        p[0] = ast.Let(assignments=p[2], expr=p[4])
     
     elif first_token == 'CASE':
-        p[0] = ('first-token', p[2], p[4])
+        p[0] = ast.Case(expr=p[2])
     
     elif first_token == 'NEW':
-        p[0] = ('first-token', p[2])
+        p[0] = ast.New(p[2])
     
     elif first_token in ['ISVOID', 'INT_COMP', 'NOT']:
-        p[0] = ('first-token', p[1], p[2])
+        p[0] = ast.UnaryOp(operator=p[1], right=p[2])
     
-    elif first_token in ['LBRACE', 'LPAREN']:
+    elif first_token in ['BLOCK_INIT', 'PARENTESIS_INIT']:
         p[0] = p[2]
     
-    elif first_token in ['INTEGER', 'STRING']:
+    elif first_token in ['INTEGER', 'STRING', 'BOOL']:
         p[0] = p[1]
 
 def p_empty(p):
@@ -257,9 +273,33 @@ def p_empty(p):
     p[0] = None
 
 def p_error(p):
-    print("Syntax error in input!")
+    if p == None:
+        token = "end of file"
+    else:
+        token = f"{p.type}({p.value}) on line {p.lineno}"
+    
+    print(f"Syntax error: Unexpected {token}")
 # Create parser
-parser = yacc.yacc()
+parser = yacc.yacc(start='program', debug=True)
+# yacc.yacc(debug=True)
+
+
+def get_ast(sourcefile):
+	with open(sourcefile, 'r') as source:
+		t = yacc.parse(source.read())
+	return t
+
+precedence = (
+    ('right', 'ASSIGN'),
+    ('left', 'NOT'), # WIP: eh realmente left?
+    ('nonassoc', 'LESS_THAN_OR_EQUAL', 'LESS_THAN', 'EQUAL' ),  # Nonassociative operators
+    ('left', 'PLUS', 'MINUS'),
+    ('left', 'MULTIPLY', 'DIVIDE'),
+    ('left', 'ISVOID'), 
+    ('left', 'INT_COMP'),
+    ('left', 'AT'),
+    ('left', 'DOT')  
+)
 
 if __name__ == '__main__':
     import sys
@@ -267,6 +307,7 @@ if __name__ == '__main__':
         data = open(sys.argv[1], 'r').read()
         result = yacc.parse(data)
         print(result)
+
     else:
         while True:
             try:
@@ -276,4 +317,3 @@ if __name__ == '__main__':
             if not s: continue
             result = yacc.parse(s)
             print(result)
-
