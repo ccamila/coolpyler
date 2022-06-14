@@ -37,7 +37,7 @@ reserved_keywords = {
 reserved_keywords_values = reserved_keywords.values()
 
 tokens = ( 
-    'ASSIGN','NOT', 'EQUAL', 'LESS_THAN', 'LESS_THAN_OR_EQUAL',
+    'ASSIGN', 'BOOL','NOT', 'EQUAL', 'LESS_THAN', 'LESS_THAN_OR_EQUAL',
     'PLUS', 'MINUS', 'MULTIPLY', 'DIVIDE', 'INT_COMP',
     'AT', 'DOT', 'ACTION',
     'BLOCK_INIT', 'BLOCK_END', 'PARENTESIS_INIT', 'PARENTESIS_END',
@@ -55,6 +55,11 @@ tokens = (
 def t_INTEGER(t):
     r'[0-9]+'
     t.value = int(t.value)    
+    return t
+
+def t_BOOL(t):
+    r'true|false'
+    t.value = True if t.value == 'true' else False
     return t
 
 def t_STRING(t):
@@ -87,11 +92,6 @@ def t_COMMENT(t):
   t.lexer.code_start = t.lexer.lexpos
   t.lexer.comment_count = 1
   t.lexer.begin('COMMENT')
-
-def t_BOOL(t):
-    r'true|false'
-    t.value = True if t.value == 'true' else False
-    return t
 
 # Define a rule so we can track line numbers
 def t_newline(t):
