@@ -1,5 +1,15 @@
 class Main inherits IO {
-   main(): SELF_TYPE {
-	out_string("Hello, World.")
-   };
+    y: Int ;
+    x: Bool;
+    tmp: String ;
+    add(x: Int, y: Int): Int {
+    {
+        x+y;
+    } 
+};
+    main(): Object{
+        {
+            add(4,3);  
+        }
+    };
 };
