@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-
-"""
-	author: abhinavmufc, sidd607
-	last modified: 25 October 2017
-	revision: 0.1.5
-"""
-
 from semantic import main
 from utils.errors import Error, Warning
 from utils.ast_helper import type_fields

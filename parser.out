@@ -1,10 +1,5 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
-Unused terminals:
-
-    NEWLINE
-    SELF
-
 Grammar
 
 Rule 0     S' -> program
@@ -18,7 +13,7 @@ Rule 7     features_opt -> features
 Rule 8     features_opt -> empty
 Rule 9     features -> feature
 Rule 10    features -> feature features
-Rule 11    feature -> ID PARENTESIS_INIT formals_opt PARENTESIS_END COLON TYPE { expr } SEMICOLON
+Rule 11    feature -> ID PARENTESIS_INIT formals_opt PARENTESIS_END COLON TYPE BLOCK_INIT expr BLOCK_END SEMICOLON
 Rule 12    feature -> attr_def SEMICOLON
 Rule 13    attr_defs -> attr_def
 Rule 14    attr_defs -> attr_def COMMA attr_defs
@@ -38,106 +33,3373 @@ Rule 27    params -> expr COMMA params
 Rule 28    block -> blockelements
 Rule 29    blockelements -> expr SEMICOLON
 Rule 30    blockelements -> expr SEMICOLON blockelements
-Rule 31    function_call -> ID PARENTESIS_INIT params_opt PARENTESIS_END
-Rule 32    targettype_opt -> targettype
-Rule 33    targettype_opt -> empty
-Rule 34    targettype -> AT TYPE
-Rule 35    expr -> ID assign
-Rule 36    expr -> expr targettype_opt DOT function_call
-Rule 37    expr -> function_call
-Rule 38    expr -> IF expr THEN expr ELSE expr FI
-Rule 39    expr -> WHILE expr LOOP expr POOL
-Rule 40    expr -> LET attr_defs IN expr
-Rule 41    expr -> CASE expr OF typeactions ESAC
-Rule 42    expr -> NEW TYPE
-Rule 43    expr -> INT_COMP expr
-Rule 44    expr -> NOT expr
-Rule 45    expr -> ISVOID expr
-Rule 46    expr -> expr PLUS expr
-Rule 47    expr -> expr MINUS expr
-Rule 48    expr -> expr MULTIPLY expr
-Rule 49    expr -> expr DIVIDE expr
-Rule 50    expr -> expr LESS_THAN expr
-Rule 51    expr -> expr LESS_THAN_OR_EQUAL expr
-Rule 52    expr -> expr EQUAL expr
-Rule 53    expr -> BLOCK_INIT block BLOCK_END
-Rule 54    expr -> PARENTESIS_INIT expr PARENTESIS_END
-Rule 55    expr -> ID
-Rule 56    expr -> INTEGER
-Rule 57    expr -> STRING
-Rule 58    empty -> <empty>
+Rule 31    typeactions -> typeaction
+Rule 32    typeactions -> typeaction typeactions
+Rule 33    typeaction -> ID COLON TYPE ACTION expr SEMICOLON
+Rule 34    function_call -> ID PARENTESIS_INIT params_opt PARENTESIS_END
+Rule 35    targettype_opt -> targettype
+Rule 36    targettype_opt -> empty
+Rule 37    targettype -> AT TYPE
+Rule 38    expr -> SELF
+Rule 39    expr -> ID assign
+Rule 40    expr -> expr targettype_opt DOT function_call
+Rule 41    expr -> function_call
+Rule 42    expr -> IF expr THEN expr ELSE expr FI
+Rule 43    expr -> WHILE expr LOOP expr POOL
+Rule 44    expr -> LET attr_defs IN expr
+Rule 45    expr -> CASE expr OF typeactions ESAC
+Rule 46    expr -> NEW TYPE
+Rule 47    expr -> INT_COMP expr
+Rule 48    expr -> NOT expr
+Rule 49    expr -> ISVOID expr
+Rule 50    expr -> expr PLUS expr
+Rule 51    expr -> expr MINUS expr
+Rule 52    expr -> expr MULTIPLY expr
+Rule 53    expr -> expr DIVIDE expr
+Rule 54    expr -> expr LESS_THAN expr
+Rule 55    expr -> expr LESS_THAN_OR_EQUAL expr
+Rule 56    expr -> expr EQUAL expr
+Rule 57    expr -> BLOCK_INIT block BLOCK_END
+Rule 58    expr -> PARENTESIS_INIT expr PARENTESIS_END
+Rule 59    expr -> ID
+Rule 60    expr -> INTEGER
+Rule 61    expr -> STRING
+Rule 62    expr -> BOOL
+Rule 63    empty -> <empty>
 
 Terminals, with rules where they appear
 
+ACTION               : 33
 ASSIGN               : 18
-AT                   : 34
-BLOCK_END            : 4 53
-BLOCK_INIT           : 4 53
-CASE                 : 41
+AT                   : 37
+BLOCK_END            : 4 11 57
+BLOCK_INIT           : 4 11 57
+BOOL                 : 62
+CASE                 : 45
 CLASS                : 4
-COLON                : 11 15 23
+COLON                : 11 15 23 33
 COMMA                : 14 22 27
-DIVIDE               : 49
-DOT                  : 36
-ELSE                 : 38
-EQUAL                : 52
-ESAC                 : 41
-FI                   : 38
-ID                   : 11 15 23 31 35 55
-IF                   : 38
-IN                   : 40
+DIVIDE               : 53
+DOT                  : 40
+ELSE                 : 42
+EQUAL                : 56
+ESAC                 : 45
+FI                   : 42
+ID                   : 11 15 23 33 34 39 59
+IF                   : 42
+IN                   : 44
 INHERITS             : 5
-INTEGER              : 56
-INT_COMP             : 43
-ISVOID               : 45
-LESS_THAN            : 50
-LESS_THAN_OR_EQUAL   : 51
-LET                  : 40
-LOOP                 : 39
-MINUS                : 47
-MULTIPLY             : 48
-NEW                  : 42
-NEWLINE              : 
-NOT                  : 44
-OF                   : 41
-PARENTESIS_END       : 11 31 54
-PARENTESIS_INIT      : 11 31 54
-PLUS                 : 46
-POOL                 : 39
-SELF                 : 
-SEMICOLON            : 4 11 12 29 30
-STRING               : 57
-THEN                 : 38
-TYPE                 : 4 5 11 15 23 34 42
-WHILE                : 39
+INTEGER              : 60
+INT_COMP             : 47
+ISVOID               : 49
+LESS_THAN            : 54
+LESS_THAN_OR_EQUAL   : 55
+LET                  : 44
+LOOP                 : 43
+MINUS                : 51
+MULTIPLY             : 52
+NEW                  : 46
+NOT                  : 48
+OF                   : 45
+PARENTESIS_END       : 11 34 58
+PARENTESIS_INIT      : 11 34 58
+PLUS                 : 50
+POOL                 : 43
+SELF                 : 38
+SEMICOLON            : 4 11 12 29 30 33
+STRING               : 61
+THEN                 : 42
+TYPE                 : 4 5 11 15 23 33 37 46
+WHILE                : 43
 error                : 
-{                    : 11
-}                    : 11
 
 Nonterminals, with rules where they appear
 
-assign               : 16 35
+assign               : 16 39
 assign_opt           : 15
 attr_def             : 12 13 14
-attr_defs            : 14 40
-block                : 53
+attr_defs            : 14 44
+block                : 57
 blockelements        : 28 30
 class                : 2 3
 classes              : 1 3
-empty                : 6 8 17 20 25 33
-expr                 : 11 18 26 27 29 30 36 38 38 38 39 39 40 41 43 44 45 46 46 47 47 48 48 49 49 50 50 51 51 52 52 54
+empty                : 6 8 17 20 25 36
+expr                 : 11 18 26 27 29 30 33 40 42 42 42 43 43 44 45 47 48 49 50 50 51 51 52 52 53 53 54 54 55 55 56 56 58
 feature              : 9 10
 features             : 7 10
 features_opt         : 4
 formal               : 21 22
 formals              : 19 22
 formals_opt          : 11
-function_call        : 36 37
+function_call        : 40 41
 inheritance          : 4
 params               : 24 27
-params_opt           : 31
+params_opt           : 34
 program              : 0
-targettype           : 32
-targettype_opt       : 36
-typeactions          : 41
+targettype           : 35
+targettype_opt       : 40
+typeaction           : 31 32
+typeactions          : 32 45
 
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . classes
+    (2) classes -> . class
+    (3) classes -> . class classes
+    (4) class -> . CLASS TYPE inheritance BLOCK_INIT features_opt BLOCK_END SEMICOLON
+
+    CLASS           shift and go to state 4
+
+    program                        shift and go to state 1
+    classes                        shift and go to state 2
+    class                          shift and go to state 3
+
+state 1
+
+    (0) S' -> program .
+
+
+
+state 2
+
+    (1) program -> classes .
+
+    $end            reduce using rule 1 (program -> classes .)
+
+
+state 3
+
+    (2) classes -> class .
+    (3) classes -> class . classes
+    (2) classes -> . class
+    (3) classes -> . class classes
+    (4) class -> . CLASS TYPE inheritance BLOCK_INIT features_opt BLOCK_END SEMICOLON
+
+    $end            reduce using rule 2 (classes -> class .)
+    CLASS           shift and go to state 4
+
+    class                          shift and go to state 3
+    classes                        shift and go to state 5
+
+state 4
+
+    (4) class -> CLASS . TYPE inheritance BLOCK_INIT features_opt BLOCK_END SEMICOLON
+
+    TYPE            shift and go to state 6
+
+
+state 5
+
+    (3) classes -> class classes .
+
+    $end            reduce using rule 3 (classes -> class classes .)
+
+
+state 6
+
+    (4) class -> CLASS TYPE . inheritance BLOCK_INIT features_opt BLOCK_END SEMICOLON
+    (5) inheritance -> . INHERITS TYPE
+    (6) inheritance -> . empty
+    (63) empty -> .
+
+    INHERITS        shift and go to state 8
+    BLOCK_INIT      reduce using rule 63 (empty -> .)
+
+    inheritance                    shift and go to state 7
+    empty                          shift and go to state 9
+
+state 7
+
+    (4) class -> CLASS TYPE inheritance . BLOCK_INIT features_opt BLOCK_END SEMICOLON
+
+    BLOCK_INIT      shift and go to state 10
+
+
+state 8
+
+    (5) inheritance -> INHERITS . TYPE
+
+    TYPE            shift and go to state 11
+
+
+state 9
+
+    (6) inheritance -> empty .
+
+    BLOCK_INIT      reduce using rule 6 (inheritance -> empty .)
+
+
+state 10
+
+    (4) class -> CLASS TYPE inheritance BLOCK_INIT . features_opt BLOCK_END SEMICOLON
+    (7) features_opt -> . features
+    (8) features_opt -> . empty
+    (9) features -> . feature
+    (10) features -> . feature features
+    (63) empty -> .
+    (11) feature -> . ID PARENTESIS_INIT formals_opt PARENTESIS_END COLON TYPE BLOCK_INIT expr BLOCK_END SEMICOLON
+    (12) feature -> . attr_def SEMICOLON
+    (15) attr_def -> . ID COLON TYPE assign_opt
+
+    BLOCK_END       reduce using rule 63 (empty -> .)
+    ID              shift and go to state 16
+
+    features_opt                   shift and go to state 12
+    features                       shift and go to state 13
+    empty                          shift and go to state 14
+    feature                        shift and go to state 15
+    attr_def                       shift and go to state 17
+
+state 11
+
+    (5) inheritance -> INHERITS TYPE .
+
+    BLOCK_INIT      reduce using rule 5 (inheritance -> INHERITS TYPE .)
+
+
+state 12
+
+    (4) class -> CLASS TYPE inheritance BLOCK_INIT features_opt . BLOCK_END SEMICOLON
+
+    BLOCK_END       shift and go to state 18
+
+
+state 13
+
+    (7) features_opt -> features .
+
+    BLOCK_END       reduce using rule 7 (features_opt -> features .)
+
+
+state 14
+
+    (8) features_opt -> empty .
+
+    BLOCK_END       reduce using rule 8 (features_opt -> empty .)
+
+
+state 15
+
+    (9) features -> feature .
+    (10) features -> feature . features
+    (9) features -> . feature
+    (10) features -> . feature features
+    (11) feature -> . ID PARENTESIS_INIT formals_opt PARENTESIS_END COLON TYPE BLOCK_INIT expr BLOCK_END SEMICOLON
+    (12) feature -> . attr_def SEMICOLON
+    (15) attr_def -> . ID COLON TYPE assign_opt
+
+    BLOCK_END       reduce using rule 9 (features -> feature .)
+    ID              shift and go to state 16
+
+    feature                        shift and go to state 15
+    features                       shift and go to state 19
+    attr_def                       shift and go to state 17
+
+state 16
+
+    (11) feature -> ID . PARENTESIS_INIT formals_opt PARENTESIS_END COLON TYPE BLOCK_INIT expr BLOCK_END SEMICOLON
+    (15) attr_def -> ID . COLON TYPE assign_opt
+
+    PARENTESIS_INIT shift and go to state 20
+    COLON           shift and go to state 21
+
+
+state 17
+
+    (12) feature -> attr_def . SEMICOLON
+
+    SEMICOLON       shift and go to state 22
+
+
+state 18
+
+    (4) class -> CLASS TYPE inheritance BLOCK_INIT features_opt BLOCK_END . SEMICOLON
+
+    SEMICOLON       shift and go to state 23
+
+
+state 19
+
+    (10) features -> feature features .
+
+    BLOCK_END       reduce using rule 10 (features -> feature features .)
+
+
+state 20
+
+    (11) feature -> ID PARENTESIS_INIT . formals_opt PARENTESIS_END COLON TYPE BLOCK_INIT expr BLOCK_END SEMICOLON
+    (19) formals_opt -> . formals
+    (20) formals_opt -> . empty
+    (21) formals -> . formal
+    (22) formals -> . formal COMMA formals
+    (63) empty -> .
+    (23) formal -> . ID COLON TYPE
+
+    PARENTESIS_END  reduce using rule 63 (empty -> .)
+    ID              shift and go to state 24
+
+    formals_opt                    shift and go to state 25
+    formals                        shift and go to state 26
+    empty                          shift and go to state 27
+    formal                         shift and go to state 28
+
+state 21
+
+    (15) attr_def -> ID COLON . TYPE assign_opt
+
+    TYPE            shift and go to state 29
+
+
+state 22
+
+    (12) feature -> attr_def SEMICOLON .
+
+    ID              reduce using rule 12 (feature -> attr_def SEMICOLON .)
+    BLOCK_END       reduce using rule 12 (feature -> attr_def SEMICOLON .)
+
+
+state 23
+
+    (4) class -> CLASS TYPE inheritance BLOCK_INIT features_opt BLOCK_END SEMICOLON .
+
+    CLASS           reduce using rule 4 (class -> CLASS TYPE inheritance BLOCK_INIT features_opt BLOCK_END SEMICOLON .)
+    $end            reduce using rule 4 (class -> CLASS TYPE inheritance BLOCK_INIT features_opt BLOCK_END SEMICOLON .)
+
+
+state 24
+
+    (23) formal -> ID . COLON TYPE
+
+    COLON           shift and go to state 30
+
+
+state 25
+
+    (11) feature -> ID PARENTESIS_INIT formals_opt . PARENTESIS_END COLON TYPE BLOCK_INIT expr BLOCK_END SEMICOLON
+
+    PARENTESIS_END  shift and go to state 31
+
+
+state 26
+
+    (19) formals_opt -> formals .
+
+    PARENTESIS_END  reduce using rule 19 (formals_opt -> formals .)
+
+
+state 27
+
+    (20) formals_opt -> empty .
+
+    PARENTESIS_END  reduce using rule 20 (formals_opt -> empty .)
+
+
+state 28
+
+    (21) formals -> formal .
+    (22) formals -> formal . COMMA formals
+
+    PARENTESIS_END  reduce using rule 21 (formals -> formal .)
+    COMMA           shift and go to state 32
+
+
+state 29
+
+    (15) attr_def -> ID COLON TYPE . assign_opt
+    (16) assign_opt -> . assign
+    (17) assign_opt -> . empty
+    (18) assign -> . ASSIGN expr
+    (63) empty -> .
+
+    ASSIGN          shift and go to state 36
+    SEMICOLON       reduce using rule 63 (empty -> .)
+    COMMA           reduce using rule 63 (empty -> .)
+    IN              reduce using rule 63 (empty -> .)
+
+    assign_opt                     shift and go to state 33
+    assign                         shift and go to state 34
+    empty                          shift and go to state 35
+
+state 30
+
+    (23) formal -> ID COLON . TYPE
+
+    TYPE            shift and go to state 37
+
+
+state 31
+
+    (11) feature -> ID PARENTESIS_INIT formals_opt PARENTESIS_END . COLON TYPE BLOCK_INIT expr BLOCK_END SEMICOLON
+
+    COLON           shift and go to state 38
+
+
+state 32
+
+    (22) formals -> formal COMMA . formals
+    (21) formals -> . formal
+    (22) formals -> . formal COMMA formals
+    (23) formal -> . ID COLON TYPE
+
+    ID              shift and go to state 24
+
+    formal                         shift and go to state 28
+    formals                        shift and go to state 39
+
+state 33
+
+    (15) attr_def -> ID COLON TYPE assign_opt .
+
+    SEMICOLON       reduce using rule 15 (attr_def -> ID COLON TYPE assign_opt .)
+    COMMA           reduce using rule 15 (attr_def -> ID COLON TYPE assign_opt .)
+    IN              reduce using rule 15 (attr_def -> ID COLON TYPE assign_opt .)
+
+
+state 34
+
+    (16) assign_opt -> assign .
+
+    SEMICOLON       reduce using rule 16 (assign_opt -> assign .)
+    COMMA           reduce using rule 16 (assign_opt -> assign .)
+    IN              reduce using rule 16 (assign_opt -> assign .)
+
+
+state 35
+
+    (17) assign_opt -> empty .
+
+    SEMICOLON       reduce using rule 17 (assign_opt -> empty .)
+    COMMA           reduce using rule 17 (assign_opt -> empty .)
+    IN              reduce using rule 17 (assign_opt -> empty .)
+
+
+state 36
+
+    (18) assign -> ASSIGN . expr
+    (38) expr -> . SELF
+    (39) expr -> . ID assign
+    (40) expr -> . expr targettype_opt DOT function_call
+    (41) expr -> . function_call
+    (42) expr -> . IF expr THEN expr ELSE expr FI
+    (43) expr -> . WHILE expr LOOP expr POOL
+    (44) expr -> . LET attr_defs IN expr
+    (45) expr -> . CASE expr OF typeactions ESAC
+    (46) expr -> . NEW TYPE
+    (47) expr -> . INT_COMP expr
+    (48) expr -> . NOT expr
+    (49) expr -> . ISVOID expr
+    (50) expr -> . expr PLUS expr
+    (51) expr -> . expr MINUS expr
+    (52) expr -> . expr MULTIPLY expr
+    (53) expr -> . expr DIVIDE expr
+    (54) expr -> . expr LESS_THAN expr
+    (55) expr -> . expr LESS_THAN_OR_EQUAL expr
+    (56) expr -> . expr EQUAL expr
+    (57) expr -> . BLOCK_INIT block BLOCK_END
+    (58) expr -> . PARENTESIS_INIT expr PARENTESIS_END
+    (59) expr -> . ID
+    (60) expr -> . INTEGER
+    (61) expr -> . STRING
+    (62) expr -> . BOOL
+    (34) function_call -> . ID PARENTESIS_INIT params_opt PARENTESIS_END
+
+    SELF            shift and go to state 41
+    ID              shift and go to state 42
+    IF              shift and go to state 44
+    WHILE           shift and go to state 45
+    LET             shift and go to state 46
+    CASE            shift and go to state 47
+    NEW             shift and go to state 48
+    INT_COMP        shift and go to state 49
+    NOT             shift and go to state 50
+    ISVOID          shift and go to state 51
+    BLOCK_INIT      shift and go to state 52
+    PARENTESIS_INIT shift and go to state 53
+    INTEGER         shift and go to state 54
+    STRING          shift and go to state 55
+    BOOL            shift and go to state 56
+
+    expr                           shift and go to state 40
+    function_call                  shift and go to state 43
+
+state 37
+
+    (23) formal -> ID COLON TYPE .
+
+    COMMA           reduce using rule 23 (formal -> ID COLON TYPE .)
+    PARENTESIS_END  reduce using rule 23 (formal -> ID COLON TYPE .)
+
+
+state 38
+
+    (11) feature -> ID PARENTESIS_INIT formals_opt PARENTESIS_END COLON . TYPE BLOCK_INIT expr BLOCK_END SEMICOLON
+
+    TYPE            shift and go to state 57
+
+
+state 39
+
+    (22) formals -> formal COMMA formals .
+
+    PARENTESIS_END  reduce using rule 22 (formals -> formal COMMA formals .)
+
+
+state 40
+
+    (18) assign -> ASSIGN expr .
+    (40) expr -> expr . targettype_opt DOT function_call
+    (50) expr -> expr . PLUS expr
+    (51) expr -> expr . MINUS expr
+    (52) expr -> expr . MULTIPLY expr
+    (53) expr -> expr . DIVIDE expr
+    (54) expr -> expr . LESS_THAN expr
+    (55) expr -> expr . LESS_THAN_OR_EQUAL expr
+    (56) expr -> expr . EQUAL expr
+    (35) targettype_opt -> . targettype
+    (36) targettype_opt -> . empty
+    (37) targettype -> . AT TYPE
+    (63) empty -> .
+
+  ! reduce/reduce conflict for DOT resolved using rule 18 (assign -> ASSIGN expr .)
+    SEMICOLON       reduce using rule 18 (assign -> ASSIGN expr .)
+    COMMA           reduce using rule 18 (assign -> ASSIGN expr .)
+    IN              reduce using rule 18 (assign -> ASSIGN expr .)
+    DOT             reduce using rule 18 (assign -> ASSIGN expr .)
+    THEN            reduce using rule 18 (assign -> ASSIGN expr .)
+    LOOP            reduce using rule 18 (assign -> ASSIGN expr .)
+    OF              reduce using rule 18 (assign -> ASSIGN expr .)
+    PARENTESIS_END  reduce using rule 18 (assign -> ASSIGN expr .)
+    BLOCK_END       reduce using rule 18 (assign -> ASSIGN expr .)
+    ELSE            reduce using rule 18 (assign -> ASSIGN expr .)
+    POOL            reduce using rule 18 (assign -> ASSIGN expr .)
+    FI              reduce using rule 18 (assign -> ASSIGN expr .)
+    PLUS            shift and go to state 59
+    MINUS           shift and go to state 60
+    MULTIPLY        shift and go to state 61
+    DIVIDE          shift and go to state 62
+    LESS_THAN       shift and go to state 63
+    LESS_THAN_OR_EQUAL shift and go to state 64
+    EQUAL           shift and go to state 65
+    AT              shift and go to state 68
+
+  ! PLUS            [ reduce using rule 18 (assign -> ASSIGN expr .) ]
+  ! MINUS           [ reduce using rule 18 (assign -> ASSIGN expr .) ]
+  ! MULTIPLY        [ reduce using rule 18 (assign -> ASSIGN expr .) ]
+  ! DIVIDE          [ reduce using rule 18 (assign -> ASSIGN expr .) ]
+  ! LESS_THAN       [ reduce using rule 18 (assign -> ASSIGN expr .) ]
+  ! LESS_THAN_OR_EQUAL [ reduce using rule 18 (assign -> ASSIGN expr .) ]
+  ! EQUAL           [ reduce using rule 18 (assign -> ASSIGN expr .) ]
+  ! AT              [ reduce using rule 18 (assign -> ASSIGN expr .) ]
+  ! DOT             [ reduce using rule 63 (empty -> .) ]
+
+    targettype_opt                 shift and go to state 58
+    targettype                     shift and go to state 66
+    empty                          shift and go to state 67
+
+state 41
+
+    (38) expr -> SELF .
+
+    PLUS            reduce using rule 38 (expr -> SELF .)
+    MINUS           reduce using rule 38 (expr -> SELF .)
+    MULTIPLY        reduce using rule 38 (expr -> SELF .)
+    DIVIDE          reduce using rule 38 (expr -> SELF .)
+    LESS_THAN       reduce using rule 38 (expr -> SELF .)
+    LESS_THAN_OR_EQUAL reduce using rule 38 (expr -> SELF .)
+    EQUAL           reduce using rule 38 (expr -> SELF .)
+    AT              reduce using rule 38 (expr -> SELF .)
+    DOT             reduce using rule 38 (expr -> SELF .)
+    SEMICOLON       reduce using rule 38 (expr -> SELF .)
+    COMMA           reduce using rule 38 (expr -> SELF .)
+    IN              reduce using rule 38 (expr -> SELF .)
+    THEN            reduce using rule 38 (expr -> SELF .)
+    LOOP            reduce using rule 38 (expr -> SELF .)
+    OF              reduce using rule 38 (expr -> SELF .)
+    PARENTESIS_END  reduce using rule 38 (expr -> SELF .)
+    BLOCK_END       reduce using rule 38 (expr -> SELF .)
+    ELSE            reduce using rule 38 (expr -> SELF .)
+    POOL            reduce using rule 38 (expr -> SELF .)
+    FI              reduce using rule 38 (expr -> SELF .)
+
+
+state 42
+
+    (39) expr -> ID . assign
+    (59) expr -> ID .
+    (34) function_call -> ID . PARENTESIS_INIT params_opt PARENTESIS_END
+    (18) assign -> . ASSIGN expr
+
+    PLUS            reduce using rule 59 (expr -> ID .)
+    MINUS           reduce using rule 59 (expr -> ID .)
+    MULTIPLY        reduce using rule 59 (expr -> ID .)
+    DIVIDE          reduce using rule 59 (expr -> ID .)
+    LESS_THAN       reduce using rule 59 (expr -> ID .)
+    LESS_THAN_OR_EQUAL reduce using rule 59 (expr -> ID .)
+    EQUAL           reduce using rule 59 (expr -> ID .)
+    AT              reduce using rule 59 (expr -> ID .)
+    DOT             reduce using rule 59 (expr -> ID .)
+    SEMICOLON       reduce using rule 59 (expr -> ID .)
+    COMMA           reduce using rule 59 (expr -> ID .)
+    IN              reduce using rule 59 (expr -> ID .)
+    THEN            reduce using rule 59 (expr -> ID .)
+    LOOP            reduce using rule 59 (expr -> ID .)
+    OF              reduce using rule 59 (expr -> ID .)
+    PARENTESIS_END  reduce using rule 59 (expr -> ID .)
+    BLOCK_END       reduce using rule 59 (expr -> ID .)
+    ELSE            reduce using rule 59 (expr -> ID .)
+    POOL            reduce using rule 59 (expr -> ID .)
+    FI              reduce using rule 59 (expr -> ID .)
+    PARENTESIS_INIT shift and go to state 70
+    ASSIGN          shift and go to state 36
+
+    assign                         shift and go to state 69
+
+state 43
+
+    (41) expr -> function_call .
+
+    PLUS            reduce using rule 41 (expr -> function_call .)
+    MINUS           reduce using rule 41 (expr -> function_call .)
+    MULTIPLY        reduce using rule 41 (expr -> function_call .)
+    DIVIDE          reduce using rule 41 (expr -> function_call .)
+    LESS_THAN       reduce using rule 41 (expr -> function_call .)
+    LESS_THAN_OR_EQUAL reduce using rule 41 (expr -> function_call .)
+    EQUAL           reduce using rule 41 (expr -> function_call .)
+    AT              reduce using rule 41 (expr -> function_call .)
+    DOT             reduce using rule 41 (expr -> function_call .)
+    SEMICOLON       reduce using rule 41 (expr -> function_call .)
+    COMMA           reduce using rule 41 (expr -> function_call .)
+    IN              reduce using rule 41 (expr -> function_call .)
+    THEN            reduce using rule 41 (expr -> function_call .)
+    LOOP            reduce using rule 41 (expr -> function_call .)
+    OF              reduce using rule 41 (expr -> function_call .)
+    PARENTESIS_END  reduce using rule 41 (expr -> function_call .)
+    BLOCK_END       reduce using rule 41 (expr -> function_call .)
+    ELSE            reduce using rule 41 (expr -> function_call .)
+    POOL            reduce using rule 41 (expr -> function_call .)
+    FI              reduce using rule 41 (expr -> function_call .)
+
+
+state 44
+
+    (42) expr -> IF . expr THEN expr ELSE expr FI
+    (38) expr -> . SELF
+    (39) expr -> . ID assign
+    (40) expr -> . expr targettype_opt DOT function_call
+    (41) expr -> . function_call
+    (42) expr -> . IF expr THEN expr ELSE expr FI
+    (43) expr -> . WHILE expr LOOP expr POOL
+    (44) expr -> . LET attr_defs IN expr
+    (45) expr -> . CASE expr OF typeactions ESAC
+    (46) expr -> . NEW TYPE
+    (47) expr -> . INT_COMP expr
+    (48) expr -> . NOT expr
+    (49) expr -> . ISVOID expr
+    (50) expr -> . expr PLUS expr
+    (51) expr -> . expr MINUS expr
+    (52) expr -> . expr MULTIPLY expr
+    (53) expr -> . expr DIVIDE expr
+    (54) expr -> . expr LESS_THAN expr
+    (55) expr -> . expr LESS_THAN_OR_EQUAL expr
+    (56) expr -> . expr EQUAL expr
+    (57) expr -> . BLOCK_INIT block BLOCK_END
+    (58) expr -> . PARENTESIS_INIT expr PARENTESIS_END
+    (59) expr -> . ID
+    (60) expr -> . INTEGER
+    (61) expr -> . STRING
+    (62) expr -> . BOOL
+    (34) function_call -> . ID PARENTESIS_INIT params_opt PARENTESIS_END
+
+    SELF            shift and go to state 41
+    ID              shift and go to state 42
+    IF              shift and go to state 44
+    WHILE           shift and go to state 45
+    LET             shift and go to state 46
+    CASE            shift and go to state 47
+    NEW             shift and go to state 48
+    INT_COMP        shift and go to state 49
+    NOT             shift and go to state 50
+    ISVOID          shift and go to state 51
+    BLOCK_INIT      shift and go to state 52
+    PARENTESIS_INIT shift and go to state 53
+    INTEGER         shift and go to state 54
+    STRING          shift and go to state 55
+    BOOL            shift and go to state 56
+
+    expr                           shift and go to state 71
+    function_call                  shift and go to state 43
+
+state 45
+
+    (43) expr -> WHILE . expr LOOP expr POOL
+    (38) expr -> . SELF
+    (39) expr -> . ID assign
+    (40) expr -> . expr targettype_opt DOT function_call
+    (41) expr -> . function_call
+    (42) expr -> . IF expr THEN expr ELSE expr FI
+    (43) expr -> . WHILE expr LOOP expr POOL
+    (44) expr -> . LET attr_defs IN expr
+    (45) expr -> . CASE expr OF typeactions ESAC
+    (46) expr -> . NEW TYPE
+    (47) expr -> . INT_COMP expr
+    (48) expr -> . NOT expr
+    (49) expr -> . ISVOID expr
+    (50) expr -> . expr PLUS expr
+    (51) expr -> . expr MINUS expr
+    (52) expr -> . expr MULTIPLY expr
+    (53) expr -> . expr DIVIDE expr
+    (54) expr -> . expr LESS_THAN expr
+    (55) expr -> . expr LESS_THAN_OR_EQUAL expr
+    (56) expr -> . expr EQUAL expr
+    (57) expr -> . BLOCK_INIT block BLOCK_END
+    (58) expr -> . PARENTESIS_INIT expr PARENTESIS_END
+    (59) expr -> . ID
+    (60) expr -> . INTEGER
+    (61) expr -> . STRING
+    (62) expr -> . BOOL
+    (34) function_call -> . ID PARENTESIS_INIT params_opt PARENTESIS_END
+
+    SELF            shift and go to state 41
+    ID              shift and go to state 42
+    IF              shift and go to state 44
+    WHILE           shift and go to state 45
+    LET             shift and go to state 46
+    CASE            shift and go to state 47
+    NEW             shift and go to state 48
+    INT_COMP        shift and go to state 49
+    NOT             shift and go to state 50
+    ISVOID          shift and go to state 51
+    BLOCK_INIT      shift and go to state 52
+    PARENTESIS_INIT shift and go to state 53
+    INTEGER         shift and go to state 54
+    STRING          shift and go to state 55
+    BOOL            shift and go to state 56
+
+    expr                           shift and go to state 72
+    function_call                  shift and go to state 43
+
+state 46
+
+    (44) expr -> LET . attr_defs IN expr
+    (13) attr_defs -> . attr_def
+    (14) attr_defs -> . attr_def COMMA attr_defs
+    (15) attr_def -> . ID COLON TYPE assign_opt
+
+    ID              shift and go to state 75
+
+    attr_defs                      shift and go to state 73
+    attr_def                       shift and go to state 74
+
+state 47
+
+    (45) expr -> CASE . expr OF typeactions ESAC
+    (38) expr -> . SELF
+    (39) expr -> . ID assign
+    (40) expr -> . expr targettype_opt DOT function_call
+    (41) expr -> . function_call
+    (42) expr -> . IF expr THEN expr ELSE expr FI
+    (43) expr -> . WHILE expr LOOP expr POOL
+    (44) expr -> . LET attr_defs IN expr
+    (45) expr -> . CASE expr OF typeactions ESAC
+    (46) expr -> . NEW TYPE
+    (47) expr -> . INT_COMP expr
+    (48) expr -> . NOT expr
+    (49) expr -> . ISVOID expr
+    (50) expr -> . expr PLUS expr
+    (51) expr -> . expr MINUS expr
+    (52) expr -> . expr MULTIPLY expr
+    (53) expr -> . expr DIVIDE expr
+    (54) expr -> . expr LESS_THAN expr
+    (55) expr -> . expr LESS_THAN_OR_EQUAL expr
+    (56) expr -> . expr EQUAL expr
+    (57) expr -> . BLOCK_INIT block BLOCK_END
+    (58) expr -> . PARENTESIS_INIT expr PARENTESIS_END
+    (59) expr -> . ID
+    (60) expr -> . INTEGER
+    (61) expr -> . STRING
+    (62) expr -> . BOOL
+    (34) function_call -> . ID PARENTESIS_INIT params_opt PARENTESIS_END
+
+    SELF            shift and go to state 41
+    ID              shift and go to state 42
+    IF              shift and go to state 44
+    WHILE           shift and go to state 45
+    LET             shift and go to state 46
+    CASE            shift and go to state 47
+    NEW             shift and go to state 48
+    INT_COMP        shift and go to state 49
+    NOT             shift and go to state 50
+    ISVOID          shift and go to state 51
+    BLOCK_INIT      shift and go to state 52
+    PARENTESIS_INIT shift and go to state 53
+    INTEGER         shift and go to state 54
+    STRING          shift and go to state 55
+    BOOL            shift and go to state 56
+
+    expr                           shift and go to state 76
+    function_call                  shift and go to state 43
+
+state 48
+
+    (46) expr -> NEW . TYPE
+
+    TYPE            shift and go to state 77
+
+
+state 49
+
+    (47) expr -> INT_COMP . expr
+    (38) expr -> . SELF
+    (39) expr -> . ID assign
+    (40) expr -> . expr targettype_opt DOT function_call
+    (41) expr -> . function_call
+    (42) expr -> . IF expr THEN expr ELSE expr FI
+    (43) expr -> . WHILE expr LOOP expr POOL
+    (44) expr -> . LET attr_defs IN expr
+    (45) expr -> . CASE expr OF typeactions ESAC
+    (46) expr -> . NEW TYPE
+    (47) expr -> . INT_COMP expr
+    (48) expr -> . NOT expr
+    (49) expr -> . ISVOID expr
+    (50) expr -> . expr PLUS expr
+    (51) expr -> . expr MINUS expr
+    (52) expr -> . expr MULTIPLY expr
+    (53) expr -> . expr DIVIDE expr
+    (54) expr -> . expr LESS_THAN expr
+    (55) expr -> . expr LESS_THAN_OR_EQUAL expr
+    (56) expr -> . expr EQUAL expr
+    (57) expr -> . BLOCK_INIT block BLOCK_END
+    (58) expr -> . PARENTESIS_INIT expr PARENTESIS_END
+    (59) expr -> . ID
+    (60) expr -> . INTEGER
+    (61) expr -> . STRING
+    (62) expr -> . BOOL
+    (34) function_call -> . ID PARENTESIS_INIT params_opt PARENTESIS_END
+
+    SELF            shift and go to state 41
+    ID              shift and go to state 42
+    IF              shift and go to state 44
+    WHILE           shift and go to state 45
+    LET             shift and go to state 46
+    CASE            shift and go to state 47
+    NEW             shift and go to state 48
+    INT_COMP        shift and go to state 49
+    NOT             shift and go to state 50
+    ISVOID          shift and go to state 51
+    BLOCK_INIT      shift and go to state 52
+    PARENTESIS_INIT shift and go to state 53
+    INTEGER         shift and go to state 54
+    STRING          shift and go to state 55
+    BOOL            shift and go to state 56
+
+    expr                           shift and go to state 78
+    function_call                  shift and go to state 43
+
+state 50
+
+    (48) expr -> NOT . expr
+    (38) expr -> . SELF
+    (39) expr -> . ID assign
+    (40) expr -> . expr targettype_opt DOT function_call
+    (41) expr -> . function_call
+    (42) expr -> . IF expr THEN expr ELSE expr FI
+    (43) expr -> . WHILE expr LOOP expr POOL
+    (44) expr -> . LET attr_defs IN expr
+    (45) expr -> . CASE expr OF typeactions ESAC
+    (46) expr -> . NEW TYPE
+    (47) expr -> . INT_COMP expr
+    (48) expr -> . NOT expr
+    (49) expr -> . ISVOID expr
+    (50) expr -> . expr PLUS expr
+    (51) expr -> . expr MINUS expr
+    (52) expr -> . expr MULTIPLY expr
+    (53) expr -> . expr DIVIDE expr
+    (54) expr -> . expr LESS_THAN expr
+    (55) expr -> . expr LESS_THAN_OR_EQUAL expr
+    (56) expr -> . expr EQUAL expr
+    (57) expr -> . BLOCK_INIT block BLOCK_END
+    (58) expr -> . PARENTESIS_INIT expr PARENTESIS_END
+    (59) expr -> . ID
+    (60) expr -> . INTEGER
+    (61) expr -> . STRING
+    (62) expr -> . BOOL
+    (34) function_call -> . ID PARENTESIS_INIT params_opt PARENTESIS_END
+
+    SELF            shift and go to state 41
+    ID              shift and go to state 42
+    IF              shift and go to state 44
+    WHILE           shift and go to state 45
+    LET             shift and go to state 46
+    CASE            shift and go to state 47
+    NEW             shift and go to state 48
+    INT_COMP        shift and go to state 49
+    NOT             shift and go to state 50
+    ISVOID          shift and go to state 51
+    BLOCK_INIT      shift and go to state 52
+    PARENTESIS_INIT shift and go to state 53
+    INTEGER         shift and go to state 54
+    STRING          shift and go to state 55
+    BOOL            shift and go to state 56
+
+    expr                           shift and go to state 79
+    function_call                  shift and go to state 43
+
+state 51
+
+    (49) expr -> ISVOID . expr
+    (38) expr -> . SELF
+    (39) expr -> . ID assign
+    (40) expr -> . expr targettype_opt DOT function_call
+    (41) expr -> . function_call
+    (42) expr -> . IF expr THEN expr ELSE expr FI
+    (43) expr -> . WHILE expr LOOP expr POOL
+    (44) expr -> . LET attr_defs IN expr
+    (45) expr -> . CASE expr OF typeactions ESAC
+    (46) expr -> . NEW TYPE
+    (47) expr -> . INT_COMP expr
+    (48) expr -> . NOT expr
+    (49) expr -> . ISVOID expr
+    (50) expr -> . expr PLUS expr
+    (51) expr -> . expr MINUS expr
+    (52) expr -> . expr MULTIPLY expr
+    (53) expr -> . expr DIVIDE expr
+    (54) expr -> . expr LESS_THAN expr
+    (55) expr -> . expr LESS_THAN_OR_EQUAL expr
+    (56) expr -> . expr EQUAL expr
+    (57) expr -> . BLOCK_INIT block BLOCK_END
+    (58) expr -> . PARENTESIS_INIT expr PARENTESIS_END
+    (59) expr -> . ID
+    (60) expr -> . INTEGER
+    (61) expr -> . STRING
+    (62) expr -> . BOOL
+    (34) function_call -> . ID PARENTESIS_INIT params_opt PARENTESIS_END
+
+    SELF            shift and go to state 41
+    ID              shift and go to state 42
+    IF              shift and go to state 44
+    WHILE           shift and go to state 45
+    LET             shift and go to state 46
+    CASE            shift and go to state 47
+    NEW             shift and go to state 48
+    INT_COMP        shift and go to state 49
+    NOT             shift and go to state 50
+    ISVOID          shift and go to state 51
+    BLOCK_INIT      shift and go to state 52
+    PARENTESIS_INIT shift and go to state 53
+    INTEGER         shift and go to state 54
+    STRING          shift and go to state 55
+    BOOL            shift and go to state 56
+
+    expr                           shift and go to state 80
+    function_call                  shift and go to state 43
+
+state 52
+
+    (57) expr -> BLOCK_INIT . block BLOCK_END
+    (28) block -> . blockelements
+    (29) blockelements -> . expr SEMICOLON
+    (30) blockelements -> . expr SEMICOLON blockelements
+    (38) expr -> . SELF
+    (39) expr -> . ID assign
+    (40) expr -> . expr targettype_opt DOT function_call
+    (41) expr -> . function_call
+    (42) expr -> . IF expr THEN expr ELSE expr FI
+    (43) expr -> . WHILE expr LOOP expr POOL
+    (44) expr -> . LET attr_defs IN expr
+    (45) expr -> . CASE expr OF typeactions ESAC
+    (46) expr -> . NEW TYPE
+    (47) expr -> . INT_COMP expr
+    (48) expr -> . NOT expr
+    (49) expr -> . ISVOID expr
+    (50) expr -> . expr PLUS expr
+    (51) expr -> . expr MINUS expr
+    (52) expr -> . expr MULTIPLY expr
+    (53) expr -> . expr DIVIDE expr
+    (54) expr -> . expr LESS_THAN expr
+    (55) expr -> . expr LESS_THAN_OR_EQUAL expr
+    (56) expr -> . expr EQUAL expr
+    (57) expr -> . BLOCK_INIT block BLOCK_END
+    (58) expr -> . PARENTESIS_INIT expr PARENTESIS_END
+    (59) expr -> . ID
+    (60) expr -> . INTEGER
+    (61) expr -> . STRING
+    (62) expr -> . BOOL
+    (34) function_call -> . ID PARENTESIS_INIT params_opt PARENTESIS_END
+
+    SELF            shift and go to state 41
+    ID              shift and go to state 42
+    IF              shift and go to state 44
+    WHILE           shift and go to state 45
+    LET             shift and go to state 46
+    CASE            shift and go to state 47
+    NEW             shift and go to state 48
+    INT_COMP        shift and go to state 49
+    NOT             shift and go to state 50
+    ISVOID          shift and go to state 51
+    BLOCK_INIT      shift and go to state 52
+    PARENTESIS_INIT shift and go to state 53
+    INTEGER         shift and go to state 54
+    STRING          shift and go to state 55
+    BOOL            shift and go to state 56
+
+    block                          shift and go to state 81
+    blockelements                  shift and go to state 82
+    expr                           shift and go to state 83
+    function_call                  shift and go to state 43
+
+state 53
+
+    (58) expr -> PARENTESIS_INIT . expr PARENTESIS_END
+    (38) expr -> . SELF
+    (39) expr -> . ID assign
+    (40) expr -> . expr targettype_opt DOT function_call
+    (41) expr -> . function_call
+    (42) expr -> . IF expr THEN expr ELSE expr FI
+    (43) expr -> . WHILE expr LOOP expr POOL
+    (44) expr -> . LET attr_defs IN expr
+    (45) expr -> . CASE expr OF typeactions ESAC
+    (46) expr -> . NEW TYPE
+    (47) expr -> . INT_COMP expr
+    (48) expr -> . NOT expr
+    (49) expr -> . ISVOID expr
+    (50) expr -> . expr PLUS expr
+    (51) expr -> . expr MINUS expr
+    (52) expr -> . expr MULTIPLY expr
+    (53) expr -> . expr DIVIDE expr
+    (54) expr -> . expr LESS_THAN expr
+    (55) expr -> . expr LESS_THAN_OR_EQUAL expr
+    (56) expr -> . expr EQUAL expr
+    (57) expr -> . BLOCK_INIT block BLOCK_END
+    (58) expr -> . PARENTESIS_INIT expr PARENTESIS_END
+    (59) expr -> . ID
+    (60) expr -> . INTEGER
+    (61) expr -> . STRING
+    (62) expr -> . BOOL
+    (34) function_call -> . ID PARENTESIS_INIT params_opt PARENTESIS_END
+
+    SELF            shift and go to state 41
+    ID              shift and go to state 42
+    IF              shift and go to state 44
+    WHILE           shift and go to state 45
+    LET             shift and go to state 46
+    CASE            shift and go to state 47
+    NEW             shift and go to state 48
+    INT_COMP        shift and go to state 49
+    NOT             shift and go to state 50
+    ISVOID          shift and go to state 51
+    BLOCK_INIT      shift and go to state 52
+    PARENTESIS_INIT shift and go to state 53
+    INTEGER         shift and go to state 54
+    STRING          shift and go to state 55
+    BOOL            shift and go to state 56
+
+    expr                           shift and go to state 84
+    function_call                  shift and go to state 43
+
+state 54
+
+    (60) expr -> INTEGER .
+
+    PLUS            reduce using rule 60 (expr -> INTEGER .)
+    MINUS           reduce using rule 60 (expr -> INTEGER .)
+    MULTIPLY        reduce using rule 60 (expr -> INTEGER .)
+    DIVIDE          reduce using rule 60 (expr -> INTEGER .)
+    LESS_THAN       reduce using rule 60 (expr -> INTEGER .)
+    LESS_THAN_OR_EQUAL reduce using rule 60 (expr -> INTEGER .)
+    EQUAL           reduce using rule 60 (expr -> INTEGER .)
+    AT              reduce using rule 60 (expr -> INTEGER .)
+    DOT             reduce using rule 60 (expr -> INTEGER .)
+    SEMICOLON       reduce using rule 60 (expr -> INTEGER .)
+    COMMA           reduce using rule 60 (expr -> INTEGER .)
+    IN              reduce using rule 60 (expr -> INTEGER .)
+    THEN            reduce using rule 60 (expr -> INTEGER .)
+    LOOP            reduce using rule 60 (expr -> INTEGER .)
+    OF              reduce using rule 60 (expr -> INTEGER .)
+    PARENTESIS_END  reduce using rule 60 (expr -> INTEGER .)
+    BLOCK_END       reduce using rule 60 (expr -> INTEGER .)
+    ELSE            reduce using rule 60 (expr -> INTEGER .)
+    POOL            reduce using rule 60 (expr -> INTEGER .)
+    FI              reduce using rule 60 (expr -> INTEGER .)
+
+
+state 55
+
+    (61) expr -> STRING .
+
+    PLUS            reduce using rule 61 (expr -> STRING .)
+    MINUS           reduce using rule 61 (expr -> STRING .)
+    MULTIPLY        reduce using rule 61 (expr -> STRING .)
+    DIVIDE          reduce using rule 61 (expr -> STRING .)
+    LESS_THAN       reduce using rule 61 (expr -> STRING .)
+    LESS_THAN_OR_EQUAL reduce using rule 61 (expr -> STRING .)
+    EQUAL           reduce using rule 61 (expr -> STRING .)
+    AT              reduce using rule 61 (expr -> STRING .)
+    DOT             reduce using rule 61 (expr -> STRING .)
+    SEMICOLON       reduce using rule 61 (expr -> STRING .)
+    COMMA           reduce using rule 61 (expr -> STRING .)
+    IN              reduce using rule 61 (expr -> STRING .)
+    THEN            reduce using rule 61 (expr -> STRING .)
+    LOOP            reduce using rule 61 (expr -> STRING .)
+    OF              reduce using rule 61 (expr -> STRING .)
+    PARENTESIS_END  reduce using rule 61 (expr -> STRING .)
+    BLOCK_END       reduce using rule 61 (expr -> STRING .)
+    ELSE            reduce using rule 61 (expr -> STRING .)
+    POOL            reduce using rule 61 (expr -> STRING .)
+    FI              reduce using rule 61 (expr -> STRING .)
+
+
+state 56
+
+    (62) expr -> BOOL .
+
+    PLUS            reduce using rule 62 (expr -> BOOL .)
+    MINUS           reduce using rule 62 (expr -> BOOL .)
+    MULTIPLY        reduce using rule 62 (expr -> BOOL .)
+    DIVIDE          reduce using rule 62 (expr -> BOOL .)
+    LESS_THAN       reduce using rule 62 (expr -> BOOL .)
+    LESS_THAN_OR_EQUAL reduce using rule 62 (expr -> BOOL .)
+    EQUAL           reduce using rule 62 (expr -> BOOL .)
+    AT              reduce using rule 62 (expr -> BOOL .)
+    DOT             reduce using rule 62 (expr -> BOOL .)
+    SEMICOLON       reduce using rule 62 (expr -> BOOL .)
+    COMMA           reduce using rule 62 (expr -> BOOL .)
+    IN              reduce using rule 62 (expr -> BOOL .)
+    THEN            reduce using rule 62 (expr -> BOOL .)
+    LOOP            reduce using rule 62 (expr -> BOOL .)
+    OF              reduce using rule 62 (expr -> BOOL .)
+    PARENTESIS_END  reduce using rule 62 (expr -> BOOL .)
+    BLOCK_END       reduce using rule 62 (expr -> BOOL .)
+    ELSE            reduce using rule 62 (expr -> BOOL .)
+    POOL            reduce using rule 62 (expr -> BOOL .)
+    FI              reduce using rule 62 (expr -> BOOL .)
+
+
+state 57
+
+    (11) feature -> ID PARENTESIS_INIT formals_opt PARENTESIS_END COLON TYPE . BLOCK_INIT expr BLOCK_END SEMICOLON
+
+    BLOCK_INIT      shift and go to state 85
+
+
+state 58
+
+    (40) expr -> expr targettype_opt . DOT function_call
+
+    DOT             shift and go to state 86
+
+
+state 59
+
+    (50) expr -> expr PLUS . expr
+    (38) expr -> . SELF
+    (39) expr -> . ID assign
+    (40) expr -> . expr targettype_opt DOT function_call
+    (41) expr -> . function_call
+    (42) expr -> . IF expr THEN expr ELSE expr FI
+    (43) expr -> . WHILE expr LOOP expr POOL
+    (44) expr -> . LET attr_defs IN expr
+    (45) expr -> . CASE expr OF typeactions ESAC
+    (46) expr -> . NEW TYPE
+    (47) expr -> . INT_COMP expr
+    (48) expr -> . NOT expr
+    (49) expr -> . ISVOID expr
+    (50) expr -> . expr PLUS expr
+    (51) expr -> . expr MINUS expr
+    (52) expr -> . expr MULTIPLY expr
+    (53) expr -> . expr DIVIDE expr
+    (54) expr -> . expr LESS_THAN expr
+    (55) expr -> . expr LESS_THAN_OR_EQUAL expr
+    (56) expr -> . expr EQUAL expr
+    (57) expr -> . BLOCK_INIT block BLOCK_END
+    (58) expr -> . PARENTESIS_INIT expr PARENTESIS_END
+    (59) expr -> . ID
+    (60) expr -> . INTEGER
+    (61) expr -> . STRING
+    (62) expr -> . BOOL
+    (34) function_call -> . ID PARENTESIS_INIT params_opt PARENTESIS_END
+
+    SELF            shift and go to state 41
+    ID              shift and go to state 42
+    IF              shift and go to state 44
+    WHILE           shift and go to state 45
+    LET             shift and go to state 46
+    CASE            shift and go to state 47
+    NEW             shift and go to state 48
+    INT_COMP        shift and go to state 49
+    NOT             shift and go to state 50
+    ISVOID          shift and go to state 51
+    BLOCK_INIT      shift and go to state 52
+    PARENTESIS_INIT shift and go to state 53
+    INTEGER         shift and go to state 54
+    STRING          shift and go to state 55
+    BOOL            shift and go to state 56
+
+    expr                           shift and go to state 87
+    function_call                  shift and go to state 43
+
+state 60
+
+    (51) expr -> expr MINUS . expr
+    (38) expr -> . SELF
+    (39) expr -> . ID assign
+    (40) expr -> . expr targettype_opt DOT function_call
+    (41) expr -> . function_call
+    (42) expr -> . IF expr THEN expr ELSE expr FI
+    (43) expr -> . WHILE expr LOOP expr POOL
+    (44) expr -> . LET attr_defs IN expr
+    (45) expr -> . CASE expr OF typeactions ESAC
+    (46) expr -> . NEW TYPE
+    (47) expr -> . INT_COMP expr
+    (48) expr -> . NOT expr
+    (49) expr -> . ISVOID expr
+    (50) expr -> . expr PLUS expr
+    (51) expr -> . expr MINUS expr
+    (52) expr -> . expr MULTIPLY expr
+    (53) expr -> . expr DIVIDE expr
+    (54) expr -> . expr LESS_THAN expr
+    (55) expr -> . expr LESS_THAN_OR_EQUAL expr
+    (56) expr -> . expr EQUAL expr
+    (57) expr -> . BLOCK_INIT block BLOCK_END
+    (58) expr -> . PARENTESIS_INIT expr PARENTESIS_END
+    (59) expr -> . ID
+    (60) expr -> . INTEGER
+    (61) expr -> . STRING
+    (62) expr -> . BOOL
+    (34) function_call -> . ID PARENTESIS_INIT params_opt PARENTESIS_END
+
+    SELF            shift and go to state 41
+    ID              shift and go to state 42
+    IF              shift and go to state 44
+    WHILE           shift and go to state 45
+    LET             shift and go to state 46
+    CASE            shift and go to state 47
+    NEW             shift and go to state 48
+    INT_COMP        shift and go to state 49
+    NOT             shift and go to state 50
+    ISVOID          shift and go to state 51
+    BLOCK_INIT      shift and go to state 52
+    PARENTESIS_INIT shift and go to state 53
+    INTEGER         shift and go to state 54
+    STRING          shift and go to state 55
+    BOOL            shift and go to state 56
+
+    expr                           shift and go to state 88
+    function_call                  shift and go to state 43
+
+state 61
+
+    (52) expr -> expr MULTIPLY . expr
+    (38) expr -> . SELF
+    (39) expr -> . ID assign
+    (40) expr -> . expr targettype_opt DOT function_call
+    (41) expr -> . function_call
+    (42) expr -> . IF expr THEN expr ELSE expr FI
+    (43) expr -> . WHILE expr LOOP expr POOL
+    (44) expr -> . LET attr_defs IN expr
+    (45) expr -> . CASE expr OF typeactions ESAC
+    (46) expr -> . NEW TYPE
+    (47) expr -> . INT_COMP expr
+    (48) expr -> . NOT expr
+    (49) expr -> . ISVOID expr
+    (50) expr -> . expr PLUS expr
+    (51) expr -> . expr MINUS expr
+    (52) expr -> . expr MULTIPLY expr
+    (53) expr -> . expr DIVIDE expr
+    (54) expr -> . expr LESS_THAN expr
+    (55) expr -> . expr LESS_THAN_OR_EQUAL expr
+    (56) expr -> . expr EQUAL expr
+    (57) expr -> . BLOCK_INIT block BLOCK_END
+    (58) expr -> . PARENTESIS_INIT expr PARENTESIS_END
+    (59) expr -> . ID
+    (60) expr -> . INTEGER
+    (61) expr -> . STRING
+    (62) expr -> . BOOL
+    (34) function_call -> . ID PARENTESIS_INIT params_opt PARENTESIS_END
+
+    SELF            shift and go to state 41
+    ID              shift and go to state 42
+    IF              shift and go to state 44
+    WHILE           shift and go to state 45
+    LET             shift and go to state 46
+    CASE            shift and go to state 47
+    NEW             shift and go to state 48
+    INT_COMP        shift and go to state 49
+    NOT             shift and go to state 50
+    ISVOID          shift and go to state 51
+    BLOCK_INIT      shift and go to state 52
+    PARENTESIS_INIT shift and go to state 53
+    INTEGER         shift and go to state 54
+    STRING          shift and go to state 55
+    BOOL            shift and go to state 56
+
+    expr                           shift and go to state 89
+    function_call                  shift and go to state 43
+
+state 62
+
+    (53) expr -> expr DIVIDE . expr
+    (38) expr -> . SELF
+    (39) expr -> . ID assign
+    (40) expr -> . expr targettype_opt DOT function_call
+    (41) expr -> . function_call
+    (42) expr -> . IF expr THEN expr ELSE expr FI
+    (43) expr -> . WHILE expr LOOP expr POOL
+    (44) expr -> . LET attr_defs IN expr
+    (45) expr -> . CASE expr OF typeactions ESAC
+    (46) expr -> . NEW TYPE
+    (47) expr -> . INT_COMP expr
+    (48) expr -> . NOT expr
+    (49) expr -> . ISVOID expr
+    (50) expr -> . expr PLUS expr
+    (51) expr -> . expr MINUS expr
+    (52) expr -> . expr MULTIPLY expr
+    (53) expr -> . expr DIVIDE expr
+    (54) expr -> . expr LESS_THAN expr
+    (55) expr -> . expr LESS_THAN_OR_EQUAL expr
+    (56) expr -> . expr EQUAL expr
+    (57) expr -> . BLOCK_INIT block BLOCK_END
+    (58) expr -> . PARENTESIS_INIT expr PARENTESIS_END
+    (59) expr -> . ID
+    (60) expr -> . INTEGER
+    (61) expr -> . STRING
+    (62) expr -> . BOOL
+    (34) function_call -> . ID PARENTESIS_INIT params_opt PARENTESIS_END
+
+    SELF            shift and go to state 41
+    ID              shift and go to state 42
+    IF              shift and go to state 44
+    WHILE           shift and go to state 45
+    LET             shift and go to state 46
+    CASE            shift and go to state 47
+    NEW             shift and go to state 48
+    INT_COMP        shift and go to state 49
+    NOT             shift and go to state 50
+    ISVOID          shift and go to state 51
+    BLOCK_INIT      shift and go to state 52
+    PARENTESIS_INIT shift and go to state 53
+    INTEGER         shift and go to state 54
+    STRING          shift and go to state 55
+    BOOL            shift and go to state 56
+
+    expr                           shift and go to state 90
+    function_call                  shift and go to state 43
+
+state 63
+
+    (54) expr -> expr LESS_THAN . expr
+    (38) expr -> . SELF
+    (39) expr -> . ID assign
+    (40) expr -> . expr targettype_opt DOT function_call
+    (41) expr -> . function_call
+    (42) expr -> . IF expr THEN expr ELSE expr FI
+    (43) expr -> . WHILE expr LOOP expr POOL
+    (44) expr -> . LET attr_defs IN expr
+    (45) expr -> . CASE expr OF typeactions ESAC
+    (46) expr -> . NEW TYPE
+    (47) expr -> . INT_COMP expr
+    (48) expr -> . NOT expr
+    (49) expr -> . ISVOID expr
+    (50) expr -> . expr PLUS expr
+    (51) expr -> . expr MINUS expr
+    (52) expr -> . expr MULTIPLY expr
+    (53) expr -> . expr DIVIDE expr
+    (54) expr -> . expr LESS_THAN expr
+    (55) expr -> . expr LESS_THAN_OR_EQUAL expr
+    (56) expr -> . expr EQUAL expr
+    (57) expr -> . BLOCK_INIT block BLOCK_END
+    (58) expr -> . PARENTESIS_INIT expr PARENTESIS_END
+    (59) expr -> . ID
+    (60) expr -> . INTEGER
+    (61) expr -> . STRING
+    (62) expr -> . BOOL
+    (34) function_call -> . ID PARENTESIS_INIT params_opt PARENTESIS_END
+
+    SELF            shift and go to state 41
+    ID              shift and go to state 42
+    IF              shift and go to state 44
+    WHILE           shift and go to state 45
+    LET             shift and go to state 46
+    CASE            shift and go to state 47
+    NEW             shift and go to state 48
+    INT_COMP        shift and go to state 49
+    NOT             shift and go to state 50
+    ISVOID          shift and go to state 51
+    BLOCK_INIT      shift and go to state 52
+    PARENTESIS_INIT shift and go to state 53
+    INTEGER         shift and go to state 54
+    STRING          shift and go to state 55
+    BOOL            shift and go to state 56
+
+    expr                           shift and go to state 91
+    function_call                  shift and go to state 43
+
+state 64
+
+    (55) expr -> expr LESS_THAN_OR_EQUAL . expr
+    (38) expr -> . SELF
+    (39) expr -> . ID assign
+    (40) expr -> . expr targettype_opt DOT function_call
+    (41) expr -> . function_call
+    (42) expr -> . IF expr THEN expr ELSE expr FI
+    (43) expr -> . WHILE expr LOOP expr POOL
+    (44) expr -> . LET attr_defs IN expr
+    (45) expr -> . CASE expr OF typeactions ESAC
+    (46) expr -> . NEW TYPE
+    (47) expr -> . INT_COMP expr
+    (48) expr -> . NOT expr
+    (49) expr -> . ISVOID expr
+    (50) expr -> . expr PLUS expr
+    (51) expr -> . expr MINUS expr
+    (52) expr -> . expr MULTIPLY expr
+    (53) expr -> . expr DIVIDE expr
+    (54) expr -> . expr LESS_THAN expr
+    (55) expr -> . expr LESS_THAN_OR_EQUAL expr
+    (56) expr -> . expr EQUAL expr
+    (57) expr -> . BLOCK_INIT block BLOCK_END
+    (58) expr -> . PARENTESIS_INIT expr PARENTESIS_END
+    (59) expr -> . ID
+    (60) expr -> . INTEGER
+    (61) expr -> . STRING
+    (62) expr -> . BOOL
+    (34) function_call -> . ID PARENTESIS_INIT params_opt PARENTESIS_END
+
+    SELF            shift and go to state 41
+    ID              shift and go to state 42
+    IF              shift and go to state 44
+    WHILE           shift and go to state 45
+    LET             shift and go to state 46
+    CASE            shift and go to state 47
+    NEW             shift and go to state 48
+    INT_COMP        shift and go to state 49
+    NOT             shift and go to state 50
+    ISVOID          shift and go to state 51
+    BLOCK_INIT      shift and go to state 52
+    PARENTESIS_INIT shift and go to state 53
+    INTEGER         shift and go to state 54
+    STRING          shift and go to state 55
+    BOOL            shift and go to state 56
+
+    expr                           shift and go to state 92
+    function_call                  shift and go to state 43
+
+state 65
+
+    (56) expr -> expr EQUAL . expr
+    (38) expr -> . SELF
+    (39) expr -> . ID assign
+    (40) expr -> . expr targettype_opt DOT function_call
+    (41) expr -> . function_call
+    (42) expr -> . IF expr THEN expr ELSE expr FI
+    (43) expr -> . WHILE expr LOOP expr POOL
+    (44) expr -> . LET attr_defs IN expr
+    (45) expr -> . CASE expr OF typeactions ESAC
+    (46) expr -> . NEW TYPE
+    (47) expr -> . INT_COMP expr
+    (48) expr -> . NOT expr
+    (49) expr -> . ISVOID expr
+    (50) expr -> . expr PLUS expr
+    (51) expr -> . expr MINUS expr
+    (52) expr -> . expr MULTIPLY expr
+    (53) expr -> . expr DIVIDE expr
+    (54) expr -> . expr LESS_THAN expr
+    (55) expr -> . expr LESS_THAN_OR_EQUAL expr
+    (56) expr -> . expr EQUAL expr
+    (57) expr -> . BLOCK_INIT block BLOCK_END
+    (58) expr -> . PARENTESIS_INIT expr PARENTESIS_END
+    (59) expr -> . ID
+    (60) expr -> . INTEGER
+    (61) expr -> . STRING
+    (62) expr -> . BOOL
+    (34) function_call -> . ID PARENTESIS_INIT params_opt PARENTESIS_END
+
+    SELF            shift and go to state 41
+    ID              shift and go to state 42
+    IF              shift and go to state 44
+    WHILE           shift and go to state 45
+    LET             shift and go to state 46
+    CASE            shift and go to state 47
+    NEW             shift and go to state 48
+    INT_COMP        shift and go to state 49
+    NOT             shift and go to state 50
+    ISVOID          shift and go to state 51
+    BLOCK_INIT      shift and go to state 52
+    PARENTESIS_INIT shift and go to state 53
+    INTEGER         shift and go to state 54
+    STRING          shift and go to state 55
+    BOOL            shift and go to state 56
+
+    expr                           shift and go to state 93
+    function_call                  shift and go to state 43
+
+state 66
+
+    (35) targettype_opt -> targettype .
+
+    DOT             reduce using rule 35 (targettype_opt -> targettype .)
+
+
+state 67
+
+    (36) targettype_opt -> empty .
+
+    DOT             reduce using rule 36 (targettype_opt -> empty .)
+
+
+state 68
+
+    (37) targettype -> AT . TYPE
+
+    TYPE            shift and go to state 94
+
+
+state 69
+
+    (39) expr -> ID assign .
+
+    PLUS            reduce using rule 39 (expr -> ID assign .)
+    MINUS           reduce using rule 39 (expr -> ID assign .)
+    MULTIPLY        reduce using rule 39 (expr -> ID assign .)
+    DIVIDE          reduce using rule 39 (expr -> ID assign .)
+    LESS_THAN       reduce using rule 39 (expr -> ID assign .)
+    LESS_THAN_OR_EQUAL reduce using rule 39 (expr -> ID assign .)
+    EQUAL           reduce using rule 39 (expr -> ID assign .)
+    AT              reduce using rule 39 (expr -> ID assign .)
+    DOT             reduce using rule 39 (expr -> ID assign .)
+    SEMICOLON       reduce using rule 39 (expr -> ID assign .)
+    COMMA           reduce using rule 39 (expr -> ID assign .)
+    IN              reduce using rule 39 (expr -> ID assign .)
+    THEN            reduce using rule 39 (expr -> ID assign .)
+    LOOP            reduce using rule 39 (expr -> ID assign .)
+    OF              reduce using rule 39 (expr -> ID assign .)
+    PARENTESIS_END  reduce using rule 39 (expr -> ID assign .)
+    BLOCK_END       reduce using rule 39 (expr -> ID assign .)
+    ELSE            reduce using rule 39 (expr -> ID assign .)
+    POOL            reduce using rule 39 (expr -> ID assign .)
+    FI              reduce using rule 39 (expr -> ID assign .)
+
+
+state 70
+
+    (34) function_call -> ID PARENTESIS_INIT . params_opt PARENTESIS_END
+    (24) params_opt -> . params
+    (25) params_opt -> . empty
+    (26) params -> . expr
+    (27) params -> . expr COMMA params
+    (63) empty -> .
+    (38) expr -> . SELF
+    (39) expr -> . ID assign
+    (40) expr -> . expr targettype_opt DOT function_call
+    (41) expr -> . function_call
+    (42) expr -> . IF expr THEN expr ELSE expr FI
+    (43) expr -> . WHILE expr LOOP expr POOL
+    (44) expr -> . LET attr_defs IN expr
+    (45) expr -> . CASE expr OF typeactions ESAC
+    (46) expr -> . NEW TYPE
+    (47) expr -> . INT_COMP expr
+    (48) expr -> . NOT expr
+    (49) expr -> . ISVOID expr
+    (50) expr -> . expr PLUS expr
+    (51) expr -> . expr MINUS expr
+    (52) expr -> . expr MULTIPLY expr
+    (53) expr -> . expr DIVIDE expr
+    (54) expr -> . expr LESS_THAN expr
+    (55) expr -> . expr LESS_THAN_OR_EQUAL expr
+    (56) expr -> . expr EQUAL expr
+    (57) expr -> . BLOCK_INIT block BLOCK_END
+    (58) expr -> . PARENTESIS_INIT expr PARENTESIS_END
+    (59) expr -> . ID
+    (60) expr -> . INTEGER
+    (61) expr -> . STRING
+    (62) expr -> . BOOL
+    (34) function_call -> . ID PARENTESIS_INIT params_opt PARENTESIS_END
+
+    PARENTESIS_END  reduce using rule 63 (empty -> .)
+    SELF            shift and go to state 41
+    ID              shift and go to state 42
+    IF              shift and go to state 44
+    WHILE           shift and go to state 45
+    LET             shift and go to state 46
+    CASE            shift and go to state 47
+    NEW             shift and go to state 48
+    INT_COMP        shift and go to state 49
+    NOT             shift and go to state 50
+    ISVOID          shift and go to state 51
+    BLOCK_INIT      shift and go to state 52
+    PARENTESIS_INIT shift and go to state 53
+    INTEGER         shift and go to state 54
+    STRING          shift and go to state 55
+    BOOL            shift and go to state 56
+
+    params_opt                     shift and go to state 95
+    params                         shift and go to state 96
+    empty                          shift and go to state 97
+    expr                           shift and go to state 98
+    function_call                  shift and go to state 43
+
+state 71
+
+    (42) expr -> IF expr . THEN expr ELSE expr FI
+    (40) expr -> expr . targettype_opt DOT function_call
+    (50) expr -> expr . PLUS expr
+    (51) expr -> expr . MINUS expr
+    (52) expr -> expr . MULTIPLY expr
+    (53) expr -> expr . DIVIDE expr
+    (54) expr -> expr . LESS_THAN expr
+    (55) expr -> expr . LESS_THAN_OR_EQUAL expr
+    (56) expr -> expr . EQUAL expr
+    (35) targettype_opt -> . targettype
+    (36) targettype_opt -> . empty
+    (37) targettype -> . AT TYPE
+    (63) empty -> .
+
+    THEN            shift and go to state 99
+    PLUS            shift and go to state 59
+    MINUS           shift and go to state 60
+    MULTIPLY        shift and go to state 61
+    DIVIDE          shift and go to state 62
+    LESS_THAN       shift and go to state 63
+    LESS_THAN_OR_EQUAL shift and go to state 64
+    EQUAL           shift and go to state 65
+    AT              shift and go to state 68
+    DOT             reduce using rule 63 (empty -> .)
+
+    targettype_opt                 shift and go to state 58
+    targettype                     shift and go to state 66
+    empty                          shift and go to state 67
+
+state 72
+
+    (43) expr -> WHILE expr . LOOP expr POOL
+    (40) expr -> expr . targettype_opt DOT function_call
+    (50) expr -> expr . PLUS expr
+    (51) expr -> expr . MINUS expr
+    (52) expr -> expr . MULTIPLY expr
+    (53) expr -> expr . DIVIDE expr
+    (54) expr -> expr . LESS_THAN expr
+    (55) expr -> expr . LESS_THAN_OR_EQUAL expr
+    (56) expr -> expr . EQUAL expr
+    (35) targettype_opt -> . targettype
+    (36) targettype_opt -> . empty
+    (37) targettype -> . AT TYPE
+    (63) empty -> .
+
+    LOOP            shift and go to state 100
+    PLUS            shift and go to state 59
+    MINUS           shift and go to state 60
+    MULTIPLY        shift and go to state 61
+    DIVIDE          shift and go to state 62
+    LESS_THAN       shift and go to state 63
+    LESS_THAN_OR_EQUAL shift and go to state 64
+    EQUAL           shift and go to state 65
+    AT              shift and go to state 68
+    DOT             reduce using rule 63 (empty -> .)
+
+    targettype_opt                 shift and go to state 58
+    targettype                     shift and go to state 66
+    empty                          shift and go to state 67
+
+state 73
+
+    (44) expr -> LET attr_defs . IN expr
+
+    IN              shift and go to state 101
+
+
+state 74
+
+    (13) attr_defs -> attr_def .
+    (14) attr_defs -> attr_def . COMMA attr_defs
+
+    IN              reduce using rule 13 (attr_defs -> attr_def .)
+    COMMA           shift and go to state 102
+
+
+state 75
+
+    (15) attr_def -> ID . COLON TYPE assign_opt
+
+    COLON           shift and go to state 21
+
+
+state 76
+
+    (45) expr -> CASE expr . OF typeactions ESAC
+    (40) expr -> expr . targettype_opt DOT function_call
+    (50) expr -> expr . PLUS expr
+    (51) expr -> expr . MINUS expr
+    (52) expr -> expr . MULTIPLY expr
+    (53) expr -> expr . DIVIDE expr
+    (54) expr -> expr . LESS_THAN expr
+    (55) expr -> expr . LESS_THAN_OR_EQUAL expr
+    (56) expr -> expr . EQUAL expr
+    (35) targettype_opt -> . targettype
+    (36) targettype_opt -> . empty
+    (37) targettype -> . AT TYPE
+    (63) empty -> .
+
+    OF              shift and go to state 103
+    PLUS            shift and go to state 59
+    MINUS           shift and go to state 60
+    MULTIPLY        shift and go to state 61
+    DIVIDE          shift and go to state 62
+    LESS_THAN       shift and go to state 63
+    LESS_THAN_OR_EQUAL shift and go to state 64
+    EQUAL           shift and go to state 65
+    AT              shift and go to state 68
+    DOT             reduce using rule 63 (empty -> .)
+
+    targettype_opt                 shift and go to state 58
+    targettype                     shift and go to state 66
+    empty                          shift and go to state 67
+
+state 77
+
+    (46) expr -> NEW TYPE .
+
+    PLUS            reduce using rule 46 (expr -> NEW TYPE .)
+    MINUS           reduce using rule 46 (expr -> NEW TYPE .)
+    MULTIPLY        reduce using rule 46 (expr -> NEW TYPE .)
+    DIVIDE          reduce using rule 46 (expr -> NEW TYPE .)
+    LESS_THAN       reduce using rule 46 (expr -> NEW TYPE .)
+    LESS_THAN_OR_EQUAL reduce using rule 46 (expr -> NEW TYPE .)
+    EQUAL           reduce using rule 46 (expr -> NEW TYPE .)
+    AT              reduce using rule 46 (expr -> NEW TYPE .)
+    DOT             reduce using rule 46 (expr -> NEW TYPE .)
+    SEMICOLON       reduce using rule 46 (expr -> NEW TYPE .)
+    COMMA           reduce using rule 46 (expr -> NEW TYPE .)
+    IN              reduce using rule 46 (expr -> NEW TYPE .)
+    THEN            reduce using rule 46 (expr -> NEW TYPE .)
+    LOOP            reduce using rule 46 (expr -> NEW TYPE .)
+    OF              reduce using rule 46 (expr -> NEW TYPE .)
+    PARENTESIS_END  reduce using rule 46 (expr -> NEW TYPE .)
+    BLOCK_END       reduce using rule 46 (expr -> NEW TYPE .)
+    ELSE            reduce using rule 46 (expr -> NEW TYPE .)
+    POOL            reduce using rule 46 (expr -> NEW TYPE .)
+    FI              reduce using rule 46 (expr -> NEW TYPE .)
+
+
+state 78
+
+    (47) expr -> INT_COMP expr .
+    (40) expr -> expr . targettype_opt DOT function_call
+    (50) expr -> expr . PLUS expr
+    (51) expr -> expr . MINUS expr
+    (52) expr -> expr . MULTIPLY expr
+    (53) expr -> expr . DIVIDE expr
+    (54) expr -> expr . LESS_THAN expr
+    (55) expr -> expr . LESS_THAN_OR_EQUAL expr
+    (56) expr -> expr . EQUAL expr
+    (35) targettype_opt -> . targettype
+    (36) targettype_opt -> . empty
+    (37) targettype -> . AT TYPE
+    (63) empty -> .
+
+  ! reduce/reduce conflict for DOT resolved using rule 47 (expr -> INT_COMP expr .)
+    PLUS            reduce using rule 47 (expr -> INT_COMP expr .)
+    MINUS           reduce using rule 47 (expr -> INT_COMP expr .)
+    MULTIPLY        reduce using rule 47 (expr -> INT_COMP expr .)
+    DIVIDE          reduce using rule 47 (expr -> INT_COMP expr .)
+    LESS_THAN       reduce using rule 47 (expr -> INT_COMP expr .)
+    LESS_THAN_OR_EQUAL reduce using rule 47 (expr -> INT_COMP expr .)
+    EQUAL           reduce using rule 47 (expr -> INT_COMP expr .)
+    DOT             reduce using rule 47 (expr -> INT_COMP expr .)
+    SEMICOLON       reduce using rule 47 (expr -> INT_COMP expr .)
+    COMMA           reduce using rule 47 (expr -> INT_COMP expr .)
+    IN              reduce using rule 47 (expr -> INT_COMP expr .)
+    THEN            reduce using rule 47 (expr -> INT_COMP expr .)
+    LOOP            reduce using rule 47 (expr -> INT_COMP expr .)
+    OF              reduce using rule 47 (expr -> INT_COMP expr .)
+    PARENTESIS_END  reduce using rule 47 (expr -> INT_COMP expr .)
+    BLOCK_END       reduce using rule 47 (expr -> INT_COMP expr .)
+    ELSE            reduce using rule 47 (expr -> INT_COMP expr .)
+    POOL            reduce using rule 47 (expr -> INT_COMP expr .)
+    FI              reduce using rule 47 (expr -> INT_COMP expr .)
+    AT              shift and go to state 68
+
+  ! AT              [ reduce using rule 47 (expr -> INT_COMP expr .) ]
+  ! PLUS            [ shift and go to state 59 ]
+  ! MINUS           [ shift and go to state 60 ]
+  ! MULTIPLY        [ shift and go to state 61 ]
+  ! DIVIDE          [ shift and go to state 62 ]
+  ! LESS_THAN       [ shift and go to state 63 ]
+  ! LESS_THAN_OR_EQUAL [ shift and go to state 64 ]
+  ! EQUAL           [ shift and go to state 65 ]
+  ! DOT             [ reduce using rule 63 (empty -> .) ]
+
+    targettype_opt                 shift and go to state 58
+    targettype                     shift and go to state 66
+    empty                          shift and go to state 67
+
+state 79
+
+    (48) expr -> NOT expr .
+    (40) expr -> expr . targettype_opt DOT function_call
+    (50) expr -> expr . PLUS expr
+    (51) expr -> expr . MINUS expr
+    (52) expr -> expr . MULTIPLY expr
+    (53) expr -> expr . DIVIDE expr
+    (54) expr -> expr . LESS_THAN expr
+    (55) expr -> expr . LESS_THAN_OR_EQUAL expr
+    (56) expr -> expr . EQUAL expr
+    (35) targettype_opt -> . targettype
+    (36) targettype_opt -> . empty
+    (37) targettype -> . AT TYPE
+    (63) empty -> .
+
+  ! reduce/reduce conflict for DOT resolved using rule 48 (expr -> NOT expr .)
+    DOT             reduce using rule 48 (expr -> NOT expr .)
+    SEMICOLON       reduce using rule 48 (expr -> NOT expr .)
+    COMMA           reduce using rule 48 (expr -> NOT expr .)
+    IN              reduce using rule 48 (expr -> NOT expr .)
+    THEN            reduce using rule 48 (expr -> NOT expr .)
+    LOOP            reduce using rule 48 (expr -> NOT expr .)
+    OF              reduce using rule 48 (expr -> NOT expr .)
+    PARENTESIS_END  reduce using rule 48 (expr -> NOT expr .)
+    BLOCK_END       reduce using rule 48 (expr -> NOT expr .)
+    ELSE            reduce using rule 48 (expr -> NOT expr .)
+    POOL            reduce using rule 48 (expr -> NOT expr .)
+    FI              reduce using rule 48 (expr -> NOT expr .)
+    PLUS            shift and go to state 59
+    MINUS           shift and go to state 60
+    MULTIPLY        shift and go to state 61
+    DIVIDE          shift and go to state 62
+    LESS_THAN       shift and go to state 63
+    LESS_THAN_OR_EQUAL shift and go to state 64
+    EQUAL           shift and go to state 65
+    AT              shift and go to state 68
+
+  ! PLUS            [ reduce using rule 48 (expr -> NOT expr .) ]
+  ! MINUS           [ reduce using rule 48 (expr -> NOT expr .) ]
+  ! MULTIPLY        [ reduce using rule 48 (expr -> NOT expr .) ]
+  ! DIVIDE          [ reduce using rule 48 (expr -> NOT expr .) ]
+  ! LESS_THAN       [ reduce using rule 48 (expr -> NOT expr .) ]
+  ! LESS_THAN_OR_EQUAL [ reduce using rule 48 (expr -> NOT expr .) ]
+  ! EQUAL           [ reduce using rule 48 (expr -> NOT expr .) ]
+  ! AT              [ reduce using rule 48 (expr -> NOT expr .) ]
+  ! DOT             [ reduce using rule 63 (empty -> .) ]
+
+    targettype_opt                 shift and go to state 58
+    targettype                     shift and go to state 66
+    empty                          shift and go to state 67
+
+state 80
+
+    (49) expr -> ISVOID expr .
+    (40) expr -> expr . targettype_opt DOT function_call
+    (50) expr -> expr . PLUS expr
+    (51) expr -> expr . MINUS expr
+    (52) expr -> expr . MULTIPLY expr
+    (53) expr -> expr . DIVIDE expr
+    (54) expr -> expr . LESS_THAN expr
+    (55) expr -> expr . LESS_THAN_OR_EQUAL expr
+    (56) expr -> expr . EQUAL expr
+    (35) targettype_opt -> . targettype
+    (36) targettype_opt -> . empty
+    (37) targettype -> . AT TYPE
+    (63) empty -> .
+
+  ! reduce/reduce conflict for DOT resolved using rule 49 (expr -> ISVOID expr .)
+    PLUS            reduce using rule 49 (expr -> ISVOID expr .)
+    MINUS           reduce using rule 49 (expr -> ISVOID expr .)
+    MULTIPLY        reduce using rule 49 (expr -> ISVOID expr .)
+    DIVIDE          reduce using rule 49 (expr -> ISVOID expr .)
+    LESS_THAN       reduce using rule 49 (expr -> ISVOID expr .)
+    LESS_THAN_OR_EQUAL reduce using rule 49 (expr -> ISVOID expr .)
+    EQUAL           reduce using rule 49 (expr -> ISVOID expr .)
+    DOT             reduce using rule 49 (expr -> ISVOID expr .)
+    SEMICOLON       reduce using rule 49 (expr -> ISVOID expr .)
+    COMMA           reduce using rule 49 (expr -> ISVOID expr .)
+    IN              reduce using rule 49 (expr -> ISVOID expr .)
+    THEN            reduce using rule 49 (expr -> ISVOID expr .)
+    LOOP            reduce using rule 49 (expr -> ISVOID expr .)
+    OF              reduce using rule 49 (expr -> ISVOID expr .)
+    PARENTESIS_END  reduce using rule 49 (expr -> ISVOID expr .)
+    BLOCK_END       reduce using rule 49 (expr -> ISVOID expr .)
+    ELSE            reduce using rule 49 (expr -> ISVOID expr .)
+    POOL            reduce using rule 49 (expr -> ISVOID expr .)
+    FI              reduce using rule 49 (expr -> ISVOID expr .)
+    AT              shift and go to state 68
+
+  ! AT              [ reduce using rule 49 (expr -> ISVOID expr .) ]
+  ! PLUS            [ shift and go to state 59 ]
+  ! MINUS           [ shift and go to state 60 ]
+  ! MULTIPLY        [ shift and go to state 61 ]
+  ! DIVIDE          [ shift and go to state 62 ]
+  ! LESS_THAN       [ shift and go to state 63 ]
+  ! LESS_THAN_OR_EQUAL [ shift and go to state 64 ]
+  ! EQUAL           [ shift and go to state 65 ]
+  ! DOT             [ reduce using rule 63 (empty -> .) ]
+
+    targettype_opt                 shift and go to state 58
+    targettype                     shift and go to state 66
+    empty                          shift and go to state 67
+
+state 81
+
+    (57) expr -> BLOCK_INIT block . BLOCK_END
+
+    BLOCK_END       shift and go to state 104
+
+
+state 82
+
+    (28) block -> blockelements .
+
+    BLOCK_END       reduce using rule 28 (block -> blockelements .)
+
+
+state 83
+
+    (29) blockelements -> expr . SEMICOLON
+    (30) blockelements -> expr . SEMICOLON blockelements
+    (40) expr -> expr . targettype_opt DOT function_call
+    (50) expr -> expr . PLUS expr
+    (51) expr -> expr . MINUS expr
+    (52) expr -> expr . MULTIPLY expr
+    (53) expr -> expr . DIVIDE expr
+    (54) expr -> expr . LESS_THAN expr
+    (55) expr -> expr . LESS_THAN_OR_EQUAL expr
+    (56) expr -> expr . EQUAL expr
+    (35) targettype_opt -> . targettype
+    (36) targettype_opt -> . empty
+    (37) targettype -> . AT TYPE
+    (63) empty -> .
+
+    SEMICOLON       shift and go to state 105
+    PLUS            shift and go to state 59
+    MINUS           shift and go to state 60
+    MULTIPLY        shift and go to state 61
+    DIVIDE          shift and go to state 62
+    LESS_THAN       shift and go to state 63
+    LESS_THAN_OR_EQUAL shift and go to state 64
+    EQUAL           shift and go to state 65
+    AT              shift and go to state 68
+    DOT             reduce using rule 63 (empty -> .)
+
+    targettype_opt                 shift and go to state 58
+    targettype                     shift and go to state 66
+    empty                          shift and go to state 67
+
+state 84
+
+    (58) expr -> PARENTESIS_INIT expr . PARENTESIS_END
+    (40) expr -> expr . targettype_opt DOT function_call
+    (50) expr -> expr . PLUS expr
+    (51) expr -> expr . MINUS expr
+    (52) expr -> expr . MULTIPLY expr
+    (53) expr -> expr . DIVIDE expr
+    (54) expr -> expr . LESS_THAN expr
+    (55) expr -> expr . LESS_THAN_OR_EQUAL expr
+    (56) expr -> expr . EQUAL expr
+    (35) targettype_opt -> . targettype
+    (36) targettype_opt -> . empty
+    (37) targettype -> . AT TYPE
+    (63) empty -> .
+
+    PARENTESIS_END  shift and go to state 106
+    PLUS            shift and go to state 59
+    MINUS           shift and go to state 60
+    MULTIPLY        shift and go to state 61
+    DIVIDE          shift and go to state 62
+    LESS_THAN       shift and go to state 63
+    LESS_THAN_OR_EQUAL shift and go to state 64
+    EQUAL           shift and go to state 65
+    AT              shift and go to state 68
+    DOT             reduce using rule 63 (empty -> .)
+
+    targettype_opt                 shift and go to state 58
+    targettype                     shift and go to state 66
+    empty                          shift and go to state 67
+
+state 85
+
+    (11) feature -> ID PARENTESIS_INIT formals_opt PARENTESIS_END COLON TYPE BLOCK_INIT . expr BLOCK_END SEMICOLON
+    (38) expr -> . SELF
+    (39) expr -> . ID assign
+    (40) expr -> . expr targettype_opt DOT function_call
+    (41) expr -> . function_call
+    (42) expr -> . IF expr THEN expr ELSE expr FI
+    (43) expr -> . WHILE expr LOOP expr POOL
+    (44) expr -> . LET attr_defs IN expr
+    (45) expr -> . CASE expr OF typeactions ESAC
+    (46) expr -> . NEW TYPE
+    (47) expr -> . INT_COMP expr
+    (48) expr -> . NOT expr
+    (49) expr -> . ISVOID expr
+    (50) expr -> . expr PLUS expr
+    (51) expr -> . expr MINUS expr
+    (52) expr -> . expr MULTIPLY expr
+    (53) expr -> . expr DIVIDE expr
+    (54) expr -> . expr LESS_THAN expr
+    (55) expr -> . expr LESS_THAN_OR_EQUAL expr
+    (56) expr -> . expr EQUAL expr
+    (57) expr -> . BLOCK_INIT block BLOCK_END
+    (58) expr -> . PARENTESIS_INIT expr PARENTESIS_END
+    (59) expr -> . ID
+    (60) expr -> . INTEGER
+    (61) expr -> . STRING
+    (62) expr -> . BOOL
+    (34) function_call -> . ID PARENTESIS_INIT params_opt PARENTESIS_END
+
+    SELF            shift and go to state 41
+    ID              shift and go to state 42
+    IF              shift and go to state 44
+    WHILE           shift and go to state 45
+    LET             shift and go to state 46
+    CASE            shift and go to state 47
+    NEW             shift and go to state 48
+    INT_COMP        shift and go to state 49
+    NOT             shift and go to state 50
+    ISVOID          shift and go to state 51
+    BLOCK_INIT      shift and go to state 52
+    PARENTESIS_INIT shift and go to state 53
+    INTEGER         shift and go to state 54
+    STRING          shift and go to state 55
+    BOOL            shift and go to state 56
+
+    expr                           shift and go to state 107
+    function_call                  shift and go to state 43
+
+state 86
+
+    (40) expr -> expr targettype_opt DOT . function_call
+    (34) function_call -> . ID PARENTESIS_INIT params_opt PARENTESIS_END
+
+    ID              shift and go to state 109
+
+    function_call                  shift and go to state 108
+
+state 87
+
+    (50) expr -> expr PLUS expr .
+    (40) expr -> expr . targettype_opt DOT function_call
+    (50) expr -> expr . PLUS expr
+    (51) expr -> expr . MINUS expr
+    (52) expr -> expr . MULTIPLY expr
+    (53) expr -> expr . DIVIDE expr
+    (54) expr -> expr . LESS_THAN expr
+    (55) expr -> expr . LESS_THAN_OR_EQUAL expr
+    (56) expr -> expr . EQUAL expr
+    (35) targettype_opt -> . targettype
+    (36) targettype_opt -> . empty
+    (37) targettype -> . AT TYPE
+    (63) empty -> .
+
+  ! reduce/reduce conflict for DOT resolved using rule 50 (expr -> expr PLUS expr .)
+    PLUS            reduce using rule 50 (expr -> expr PLUS expr .)
+    MINUS           reduce using rule 50 (expr -> expr PLUS expr .)
+    LESS_THAN       reduce using rule 50 (expr -> expr PLUS expr .)
+    LESS_THAN_OR_EQUAL reduce using rule 50 (expr -> expr PLUS expr .)
+    EQUAL           reduce using rule 50 (expr -> expr PLUS expr .)
+    DOT             reduce using rule 50 (expr -> expr PLUS expr .)
+    SEMICOLON       reduce using rule 50 (expr -> expr PLUS expr .)
+    COMMA           reduce using rule 50 (expr -> expr PLUS expr .)
+    IN              reduce using rule 50 (expr -> expr PLUS expr .)
+    THEN            reduce using rule 50 (expr -> expr PLUS expr .)
+    LOOP            reduce using rule 50 (expr -> expr PLUS expr .)
+    OF              reduce using rule 50 (expr -> expr PLUS expr .)
+    PARENTESIS_END  reduce using rule 50 (expr -> expr PLUS expr .)
+    BLOCK_END       reduce using rule 50 (expr -> expr PLUS expr .)
+    ELSE            reduce using rule 50 (expr -> expr PLUS expr .)
+    POOL            reduce using rule 50 (expr -> expr PLUS expr .)
+    FI              reduce using rule 50 (expr -> expr PLUS expr .)
+    MULTIPLY        shift and go to state 61
+    DIVIDE          shift and go to state 62
+    AT              shift and go to state 68
+
+  ! MULTIPLY        [ reduce using rule 50 (expr -> expr PLUS expr .) ]
+  ! DIVIDE          [ reduce using rule 50 (expr -> expr PLUS expr .) ]
+  ! AT              [ reduce using rule 50 (expr -> expr PLUS expr .) ]
+  ! PLUS            [ shift and go to state 59 ]
+  ! MINUS           [ shift and go to state 60 ]
+  ! LESS_THAN       [ shift and go to state 63 ]
+  ! LESS_THAN_OR_EQUAL [ shift and go to state 64 ]
+  ! EQUAL           [ shift and go to state 65 ]
+  ! DOT             [ reduce using rule 63 (empty -> .) ]
+
+    targettype_opt                 shift and go to state 58
+    targettype                     shift and go to state 66
+    empty                          shift and go to state 67
+
+state 88
+
+    (51) expr -> expr MINUS expr .
+    (40) expr -> expr . targettype_opt DOT function_call
+    (50) expr -> expr . PLUS expr
+    (51) expr -> expr . MINUS expr
+    (52) expr -> expr . MULTIPLY expr
+    (53) expr -> expr . DIVIDE expr
+    (54) expr -> expr . LESS_THAN expr
+    (55) expr -> expr . LESS_THAN_OR_EQUAL expr
+    (56) expr -> expr . EQUAL expr
+    (35) targettype_opt -> . targettype
+    (36) targettype_opt -> . empty
+    (37) targettype -> . AT TYPE
+    (63) empty -> .
+
+  ! reduce/reduce conflict for DOT resolved using rule 51 (expr -> expr MINUS expr .)
+    PLUS            reduce using rule 51 (expr -> expr MINUS expr .)
+    MINUS           reduce using rule 51 (expr -> expr MINUS expr .)
+    LESS_THAN       reduce using rule 51 (expr -> expr MINUS expr .)
+    LESS_THAN_OR_EQUAL reduce using rule 51 (expr -> expr MINUS expr .)
+    EQUAL           reduce using rule 51 (expr -> expr MINUS expr .)
+    DOT             reduce using rule 51 (expr -> expr MINUS expr .)
+    SEMICOLON       reduce using rule 51 (expr -> expr MINUS expr .)
+    COMMA           reduce using rule 51 (expr -> expr MINUS expr .)
+    IN              reduce using rule 51 (expr -> expr MINUS expr .)
+    THEN            reduce using rule 51 (expr -> expr MINUS expr .)
+    LOOP            reduce using rule 51 (expr -> expr MINUS expr .)
+    OF              reduce using rule 51 (expr -> expr MINUS expr .)
+    PARENTESIS_END  reduce using rule 51 (expr -> expr MINUS expr .)
+    BLOCK_END       reduce using rule 51 (expr -> expr MINUS expr .)
+    ELSE            reduce using rule 51 (expr -> expr MINUS expr .)
+    POOL            reduce using rule 51 (expr -> expr MINUS expr .)
+    FI              reduce using rule 51 (expr -> expr MINUS expr .)
+    MULTIPLY        shift and go to state 61
+    DIVIDE          shift and go to state 62
+    AT              shift and go to state 68
+
+  ! MULTIPLY        [ reduce using rule 51 (expr -> expr MINUS expr .) ]
+  ! DIVIDE          [ reduce using rule 51 (expr -> expr MINUS expr .) ]
+  ! AT              [ reduce using rule 51 (expr -> expr MINUS expr .) ]
+  ! PLUS            [ shift and go to state 59 ]
+  ! MINUS           [ shift and go to state 60 ]
+  ! LESS_THAN       [ shift and go to state 63 ]
+  ! LESS_THAN_OR_EQUAL [ shift and go to state 64 ]
+  ! EQUAL           [ shift and go to state 65 ]
+  ! DOT             [ reduce using rule 63 (empty -> .) ]
+
+    targettype_opt                 shift and go to state 58
+    targettype                     shift and go to state 66
+    empty                          shift and go to state 67
+
+state 89
+
+    (52) expr -> expr MULTIPLY expr .
+    (40) expr -> expr . targettype_opt DOT function_call
+    (50) expr -> expr . PLUS expr
+    (51) expr -> expr . MINUS expr
+    (52) expr -> expr . MULTIPLY expr
+    (53) expr -> expr . DIVIDE expr
+    (54) expr -> expr . LESS_THAN expr
+    (55) expr -> expr . LESS_THAN_OR_EQUAL expr
+    (56) expr -> expr . EQUAL expr
+    (35) targettype_opt -> . targettype
+    (36) targettype_opt -> . empty
+    (37) targettype -> . AT TYPE
+    (63) empty -> .
+
+  ! reduce/reduce conflict for DOT resolved using rule 52 (expr -> expr MULTIPLY expr .)
+    PLUS            reduce using rule 52 (expr -> expr MULTIPLY expr .)
+    MINUS           reduce using rule 52 (expr -> expr MULTIPLY expr .)
+    MULTIPLY        reduce using rule 52 (expr -> expr MULTIPLY expr .)
+    DIVIDE          reduce using rule 52 (expr -> expr MULTIPLY expr .)
+    LESS_THAN       reduce using rule 52 (expr -> expr MULTIPLY expr .)
+    LESS_THAN_OR_EQUAL reduce using rule 52 (expr -> expr MULTIPLY expr .)
+    EQUAL           reduce using rule 52 (expr -> expr MULTIPLY expr .)
+    DOT             reduce using rule 52 (expr -> expr MULTIPLY expr .)
+    SEMICOLON       reduce using rule 52 (expr -> expr MULTIPLY expr .)
+    COMMA           reduce using rule 52 (expr -> expr MULTIPLY expr .)
+    IN              reduce using rule 52 (expr -> expr MULTIPLY expr .)
+    THEN            reduce using rule 52 (expr -> expr MULTIPLY expr .)
+    LOOP            reduce using rule 52 (expr -> expr MULTIPLY expr .)
+    OF              reduce using rule 52 (expr -> expr MULTIPLY expr .)
+    PARENTESIS_END  reduce using rule 52 (expr -> expr MULTIPLY expr .)
+    BLOCK_END       reduce using rule 52 (expr -> expr MULTIPLY expr .)
+    ELSE            reduce using rule 52 (expr -> expr MULTIPLY expr .)
+    POOL            reduce using rule 52 (expr -> expr MULTIPLY expr .)
+    FI              reduce using rule 52 (expr -> expr MULTIPLY expr .)
+    AT              shift and go to state 68
+
+  ! AT              [ reduce using rule 52 (expr -> expr MULTIPLY expr .) ]
+  ! PLUS            [ shift and go to state 59 ]
+  ! MINUS           [ shift and go to state 60 ]
+  ! MULTIPLY        [ shift and go to state 61 ]
+  ! DIVIDE          [ shift and go to state 62 ]
+  ! LESS_THAN       [ shift and go to state 63 ]
+  ! LESS_THAN_OR_EQUAL [ shift and go to state 64 ]
+  ! EQUAL           [ shift and go to state 65 ]
+  ! DOT             [ reduce using rule 63 (empty -> .) ]
+
+    targettype_opt                 shift and go to state 58
+    targettype                     shift and go to state 66
+    empty                          shift and go to state 67
+
+state 90
+
+    (53) expr -> expr DIVIDE expr .
+    (40) expr -> expr . targettype_opt DOT function_call
+    (50) expr -> expr . PLUS expr
+    (51) expr -> expr . MINUS expr
+    (52) expr -> expr . MULTIPLY expr
+    (53) expr -> expr . DIVIDE expr
+    (54) expr -> expr . LESS_THAN expr
+    (55) expr -> expr . LESS_THAN_OR_EQUAL expr
+    (56) expr -> expr . EQUAL expr
+    (35) targettype_opt -> . targettype
+    (36) targettype_opt -> . empty
+    (37) targettype -> . AT TYPE
+    (63) empty -> .
+
+  ! reduce/reduce conflict for DOT resolved using rule 53 (expr -> expr DIVIDE expr .)
+    PLUS            reduce using rule 53 (expr -> expr DIVIDE expr .)
+    MINUS           reduce using rule 53 (expr -> expr DIVIDE expr .)
+    MULTIPLY        reduce using rule 53 (expr -> expr DIVIDE expr .)
+    DIVIDE          reduce using rule 53 (expr -> expr DIVIDE expr .)
+    LESS_THAN       reduce using rule 53 (expr -> expr DIVIDE expr .)
+    LESS_THAN_OR_EQUAL reduce using rule 53 (expr -> expr DIVIDE expr .)
+    EQUAL           reduce using rule 53 (expr -> expr DIVIDE expr .)
+    DOT             reduce using rule 53 (expr -> expr DIVIDE expr .)
+    SEMICOLON       reduce using rule 53 (expr -> expr DIVIDE expr .)
+    COMMA           reduce using rule 53 (expr -> expr DIVIDE expr .)
+    IN              reduce using rule 53 (expr -> expr DIVIDE expr .)
+    THEN            reduce using rule 53 (expr -> expr DIVIDE expr .)
+    LOOP            reduce using rule 53 (expr -> expr DIVIDE expr .)
+    OF              reduce using rule 53 (expr -> expr DIVIDE expr .)
+    PARENTESIS_END  reduce using rule 53 (expr -> expr DIVIDE expr .)
+    BLOCK_END       reduce using rule 53 (expr -> expr DIVIDE expr .)
+    ELSE            reduce using rule 53 (expr -> expr DIVIDE expr .)
+    POOL            reduce using rule 53 (expr -> expr DIVIDE expr .)
+    FI              reduce using rule 53 (expr -> expr DIVIDE expr .)
+    AT              shift and go to state 68
+
+  ! AT              [ reduce using rule 53 (expr -> expr DIVIDE expr .) ]
+  ! PLUS            [ shift and go to state 59 ]
+  ! MINUS           [ shift and go to state 60 ]
+  ! MULTIPLY        [ shift and go to state 61 ]
+  ! DIVIDE          [ shift and go to state 62 ]
+  ! LESS_THAN       [ shift and go to state 63 ]
+  ! LESS_THAN_OR_EQUAL [ shift and go to state 64 ]
+  ! EQUAL           [ shift and go to state 65 ]
+  ! DOT             [ reduce using rule 63 (empty -> .) ]
+
+    targettype_opt                 shift and go to state 58
+    targettype                     shift and go to state 66
+    empty                          shift and go to state 67
+
+state 91
+
+    (54) expr -> expr LESS_THAN expr .
+    (40) expr -> expr . targettype_opt DOT function_call
+    (50) expr -> expr . PLUS expr
+    (51) expr -> expr . MINUS expr
+    (52) expr -> expr . MULTIPLY expr
+    (53) expr -> expr . DIVIDE expr
+    (54) expr -> expr . LESS_THAN expr
+    (55) expr -> expr . LESS_THAN_OR_EQUAL expr
+    (56) expr -> expr . EQUAL expr
+    (35) targettype_opt -> . targettype
+    (36) targettype_opt -> . empty
+    (37) targettype -> . AT TYPE
+    (63) empty -> .
+
+  ! reduce/reduce conflict for DOT resolved using rule 54 (expr -> expr LESS_THAN expr .)
+    LESS_THAN       reduce using rule 54 (expr -> expr LESS_THAN expr .)
+    LESS_THAN_OR_EQUAL reduce using rule 54 (expr -> expr LESS_THAN expr .)
+    EQUAL           reduce using rule 54 (expr -> expr LESS_THAN expr .)
+    DOT             reduce using rule 54 (expr -> expr LESS_THAN expr .)
+    SEMICOLON       reduce using rule 54 (expr -> expr LESS_THAN expr .)
+    COMMA           reduce using rule 54 (expr -> expr LESS_THAN expr .)
+    IN              reduce using rule 54 (expr -> expr LESS_THAN expr .)
+    THEN            reduce using rule 54 (expr -> expr LESS_THAN expr .)
+    LOOP            reduce using rule 54 (expr -> expr LESS_THAN expr .)
+    OF              reduce using rule 54 (expr -> expr LESS_THAN expr .)
+    PARENTESIS_END  reduce using rule 54 (expr -> expr LESS_THAN expr .)
+    BLOCK_END       reduce using rule 54 (expr -> expr LESS_THAN expr .)
+    ELSE            reduce using rule 54 (expr -> expr LESS_THAN expr .)
+    POOL            reduce using rule 54 (expr -> expr LESS_THAN expr .)
+    FI              reduce using rule 54 (expr -> expr LESS_THAN expr .)
+    PLUS            shift and go to state 59
+    MINUS           shift and go to state 60
+    MULTIPLY        shift and go to state 61
+    DIVIDE          shift and go to state 62
+    AT              shift and go to state 68
+
+  ! PLUS            [ reduce using rule 54 (expr -> expr LESS_THAN expr .) ]
+  ! MINUS           [ reduce using rule 54 (expr -> expr LESS_THAN expr .) ]
+  ! MULTIPLY        [ reduce using rule 54 (expr -> expr LESS_THAN expr .) ]
+  ! DIVIDE          [ reduce using rule 54 (expr -> expr LESS_THAN expr .) ]
+  ! AT              [ reduce using rule 54 (expr -> expr LESS_THAN expr .) ]
+  ! LESS_THAN       [ shift and go to state 63 ]
+  ! LESS_THAN_OR_EQUAL [ shift and go to state 64 ]
+  ! EQUAL           [ shift and go to state 65 ]
+  ! DOT             [ reduce using rule 63 (empty -> .) ]
+
+    targettype_opt                 shift and go to state 58
+    targettype                     shift and go to state 66
+    empty                          shift and go to state 67
+
+state 92
+
+    (55) expr -> expr LESS_THAN_OR_EQUAL expr .
+    (40) expr -> expr . targettype_opt DOT function_call
+    (50) expr -> expr . PLUS expr
+    (51) expr -> expr . MINUS expr
+    (52) expr -> expr . MULTIPLY expr
+    (53) expr -> expr . DIVIDE expr
+    (54) expr -> expr . LESS_THAN expr
+    (55) expr -> expr . LESS_THAN_OR_EQUAL expr
+    (56) expr -> expr . EQUAL expr
+    (35) targettype_opt -> . targettype
+    (36) targettype_opt -> . empty
+    (37) targettype -> . AT TYPE
+    (63) empty -> .
+
+  ! reduce/reduce conflict for DOT resolved using rule 55 (expr -> expr LESS_THAN_OR_EQUAL expr .)
+    LESS_THAN       reduce using rule 55 (expr -> expr LESS_THAN_OR_EQUAL expr .)
+    LESS_THAN_OR_EQUAL reduce using rule 55 (expr -> expr LESS_THAN_OR_EQUAL expr .)
+    EQUAL           reduce using rule 55 (expr -> expr LESS_THAN_OR_EQUAL expr .)
+    DOT             reduce using rule 55 (expr -> expr LESS_THAN_OR_EQUAL expr .)
+    SEMICOLON       reduce using rule 55 (expr -> expr LESS_THAN_OR_EQUAL expr .)
+    COMMA           reduce using rule 55 (expr -> expr LESS_THAN_OR_EQUAL expr .)
+    IN              reduce using rule 55 (expr -> expr LESS_THAN_OR_EQUAL expr .)
+    THEN            reduce using rule 55 (expr -> expr LESS_THAN_OR_EQUAL expr .)
+    LOOP            reduce using rule 55 (expr -> expr LESS_THAN_OR_EQUAL expr .)
+    OF              reduce using rule 55 (expr -> expr LESS_THAN_OR_EQUAL expr .)
+    PARENTESIS_END  reduce using rule 55 (expr -> expr LESS_THAN_OR_EQUAL expr .)
+    BLOCK_END       reduce using rule 55 (expr -> expr LESS_THAN_OR_EQUAL expr .)
+    ELSE            reduce using rule 55 (expr -> expr LESS_THAN_OR_EQUAL expr .)
+    POOL            reduce using rule 55 (expr -> expr LESS_THAN_OR_EQUAL expr .)
+    FI              reduce using rule 55 (expr -> expr LESS_THAN_OR_EQUAL expr .)
+    PLUS            shift and go to state 59
+    MINUS           shift and go to state 60
+    MULTIPLY        shift and go to state 61
+    DIVIDE          shift and go to state 62
+    AT              shift and go to state 68
+
+  ! PLUS            [ reduce using rule 55 (expr -> expr LESS_THAN_OR_EQUAL expr .) ]
+  ! MINUS           [ reduce using rule 55 (expr -> expr LESS_THAN_OR_EQUAL expr .) ]
+  ! MULTIPLY        [ reduce using rule 55 (expr -> expr LESS_THAN_OR_EQUAL expr .) ]
+  ! DIVIDE          [ reduce using rule 55 (expr -> expr LESS_THAN_OR_EQUAL expr .) ]
+  ! AT              [ reduce using rule 55 (expr -> expr LESS_THAN_OR_EQUAL expr .) ]
+  ! LESS_THAN       [ shift and go to state 63 ]
+  ! LESS_THAN_OR_EQUAL [ shift and go to state 64 ]
+  ! EQUAL           [ shift and go to state 65 ]
+  ! DOT             [ reduce using rule 63 (empty -> .) ]
+
+    targettype_opt                 shift and go to state 58
+    targettype                     shift and go to state 66
+    empty                          shift and go to state 67
+
+state 93
+
+    (56) expr -> expr EQUAL expr .
+    (40) expr -> expr . targettype_opt DOT function_call
+    (50) expr -> expr . PLUS expr
+    (51) expr -> expr . MINUS expr
+    (52) expr -> expr . MULTIPLY expr
+    (53) expr -> expr . DIVIDE expr
+    (54) expr -> expr . LESS_THAN expr
+    (55) expr -> expr . LESS_THAN_OR_EQUAL expr
+    (56) expr -> expr . EQUAL expr
+    (35) targettype_opt -> . targettype
+    (36) targettype_opt -> . empty
+    (37) targettype -> . AT TYPE
+    (63) empty -> .
+
+  ! reduce/reduce conflict for DOT resolved using rule 56 (expr -> expr EQUAL expr .)
+    LESS_THAN       reduce using rule 56 (expr -> expr EQUAL expr .)
+    LESS_THAN_OR_EQUAL reduce using rule 56 (expr -> expr EQUAL expr .)
+    EQUAL           reduce using rule 56 (expr -> expr EQUAL expr .)
+    DOT             reduce using rule 56 (expr -> expr EQUAL expr .)
+    SEMICOLON       reduce using rule 56 (expr -> expr EQUAL expr .)
+    COMMA           reduce using rule 56 (expr -> expr EQUAL expr .)
+    IN              reduce using rule 56 (expr -> expr EQUAL expr .)
+    THEN            reduce using rule 56 (expr -> expr EQUAL expr .)
+    LOOP            reduce using rule 56 (expr -> expr EQUAL expr .)
+    OF              reduce using rule 56 (expr -> expr EQUAL expr .)
+    PARENTESIS_END  reduce using rule 56 (expr -> expr EQUAL expr .)
+    BLOCK_END       reduce using rule 56 (expr -> expr EQUAL expr .)
+    ELSE            reduce using rule 56 (expr -> expr EQUAL expr .)
+    POOL            reduce using rule 56 (expr -> expr EQUAL expr .)
+    FI              reduce using rule 56 (expr -> expr EQUAL expr .)
+    PLUS            shift and go to state 59
+    MINUS           shift and go to state 60
+    MULTIPLY        shift and go to state 61
+    DIVIDE          shift and go to state 62
+    AT              shift and go to state 68
+
+  ! PLUS            [ reduce using rule 56 (expr -> expr EQUAL expr .) ]
+  ! MINUS           [ reduce using rule 56 (expr -> expr EQUAL expr .) ]
+  ! MULTIPLY        [ reduce using rule 56 (expr -> expr EQUAL expr .) ]
+  ! DIVIDE          [ reduce using rule 56 (expr -> expr EQUAL expr .) ]
+  ! AT              [ reduce using rule 56 (expr -> expr EQUAL expr .) ]
+  ! LESS_THAN       [ shift and go to state 63 ]
+  ! LESS_THAN_OR_EQUAL [ shift and go to state 64 ]
+  ! EQUAL           [ shift and go to state 65 ]
+  ! DOT             [ reduce using rule 63 (empty -> .) ]
+
+    targettype_opt                 shift and go to state 58
+    targettype                     shift and go to state 66
+    empty                          shift and go to state 67
+
+state 94
+
+    (37) targettype -> AT TYPE .
+
+    DOT             reduce using rule 37 (targettype -> AT TYPE .)
+
+
+state 95
+
+    (34) function_call -> ID PARENTESIS_INIT params_opt . PARENTESIS_END
+
+    PARENTESIS_END  shift and go to state 110
+
+
+state 96
+
+    (24) params_opt -> params .
+
+    PARENTESIS_END  reduce using rule 24 (params_opt -> params .)
+
+
+state 97
+
+    (25) params_opt -> empty .
+
+    PARENTESIS_END  reduce using rule 25 (params_opt -> empty .)
+
+
+state 98
+
+    (26) params -> expr .
+    (27) params -> expr . COMMA params
+    (40) expr -> expr . targettype_opt DOT function_call
+    (50) expr -> expr . PLUS expr
+    (51) expr -> expr . MINUS expr
+    (52) expr -> expr . MULTIPLY expr
+    (53) expr -> expr . DIVIDE expr
+    (54) expr -> expr . LESS_THAN expr
+    (55) expr -> expr . LESS_THAN_OR_EQUAL expr
+    (56) expr -> expr . EQUAL expr
+    (35) targettype_opt -> . targettype
+    (36) targettype_opt -> . empty
+    (37) targettype -> . AT TYPE
+    (63) empty -> .
+
+    PARENTESIS_END  reduce using rule 26 (params -> expr .)
+    COMMA           shift and go to state 111
+    PLUS            shift and go to state 59
+    MINUS           shift and go to state 60
+    MULTIPLY        shift and go to state 61
+    DIVIDE          shift and go to state 62
+    LESS_THAN       shift and go to state 63
+    LESS_THAN_OR_EQUAL shift and go to state 64
+    EQUAL           shift and go to state 65
+    AT              shift and go to state 68
+    DOT             reduce using rule 63 (empty -> .)
+
+    targettype_opt                 shift and go to state 58
+    targettype                     shift and go to state 66
+    empty                          shift and go to state 67
+
+state 99
+
+    (42) expr -> IF expr THEN . expr ELSE expr FI
+    (38) expr -> . SELF
+    (39) expr -> . ID assign
+    (40) expr -> . expr targettype_opt DOT function_call
+    (41) expr -> . function_call
+    (42) expr -> . IF expr THEN expr ELSE expr FI
+    (43) expr -> . WHILE expr LOOP expr POOL
+    (44) expr -> . LET attr_defs IN expr
+    (45) expr -> . CASE expr OF typeactions ESAC
+    (46) expr -> . NEW TYPE
+    (47) expr -> . INT_COMP expr
+    (48) expr -> . NOT expr
+    (49) expr -> . ISVOID expr
+    (50) expr -> . expr PLUS expr
+    (51) expr -> . expr MINUS expr
+    (52) expr -> . expr MULTIPLY expr
+    (53) expr -> . expr DIVIDE expr
+    (54) expr -> . expr LESS_THAN expr
+    (55) expr -> . expr LESS_THAN_OR_EQUAL expr
+    (56) expr -> . expr EQUAL expr
+    (57) expr -> . BLOCK_INIT block BLOCK_END
+    (58) expr -> . PARENTESIS_INIT expr PARENTESIS_END
+    (59) expr -> . ID
+    (60) expr -> . INTEGER
+    (61) expr -> . STRING
+    (62) expr -> . BOOL
+    (34) function_call -> . ID PARENTESIS_INIT params_opt PARENTESIS_END
+
+    SELF            shift and go to state 41
+    ID              shift and go to state 42
+    IF              shift and go to state 44
+    WHILE           shift and go to state 45
+    LET             shift and go to state 46
+    CASE            shift and go to state 47
+    NEW             shift and go to state 48
+    INT_COMP        shift and go to state 49
+    NOT             shift and go to state 50
+    ISVOID          shift and go to state 51
+    BLOCK_INIT      shift and go to state 52
+    PARENTESIS_INIT shift and go to state 53
+    INTEGER         shift and go to state 54
+    STRING          shift and go to state 55
+    BOOL            shift and go to state 56
+
+    expr                           shift and go to state 112
+    function_call                  shift and go to state 43
+
+state 100
+
+    (43) expr -> WHILE expr LOOP . expr POOL
+    (38) expr -> . SELF
+    (39) expr -> . ID assign
+    (40) expr -> . expr targettype_opt DOT function_call
+    (41) expr -> . function_call
+    (42) expr -> . IF expr THEN expr ELSE expr FI
+    (43) expr -> . WHILE expr LOOP expr POOL
+    (44) expr -> . LET attr_defs IN expr
+    (45) expr -> . CASE expr OF typeactions ESAC
+    (46) expr -> . NEW TYPE
+    (47) expr -> . INT_COMP expr
+    (48) expr -> . NOT expr
+    (49) expr -> . ISVOID expr
+    (50) expr -> . expr PLUS expr
+    (51) expr -> . expr MINUS expr
+    (52) expr -> . expr MULTIPLY expr
+    (53) expr -> . expr DIVIDE expr
+    (54) expr -> . expr LESS_THAN expr
+    (55) expr -> . expr LESS_THAN_OR_EQUAL expr
+    (56) expr -> . expr EQUAL expr
+    (57) expr -> . BLOCK_INIT block BLOCK_END
+    (58) expr -> . PARENTESIS_INIT expr PARENTESIS_END
+    (59) expr -> . ID
+    (60) expr -> . INTEGER
+    (61) expr -> . STRING
+    (62) expr -> . BOOL
+    (34) function_call -> . ID PARENTESIS_INIT params_opt PARENTESIS_END
+
+    SELF            shift and go to state 41
+    ID              shift and go to state 42
+    IF              shift and go to state 44
+    WHILE           shift and go to state 45
+    LET             shift and go to state 46
+    CASE            shift and go to state 47
+    NEW             shift and go to state 48
+    INT_COMP        shift and go to state 49
+    NOT             shift and go to state 50
+    ISVOID          shift and go to state 51
+    BLOCK_INIT      shift and go to state 52
+    PARENTESIS_INIT shift and go to state 53
+    INTEGER         shift and go to state 54
+    STRING          shift and go to state 55
+    BOOL            shift and go to state 56
+
+    expr                           shift and go to state 113
+    function_call                  shift and go to state 43
+
+state 101
+
+    (44) expr -> LET attr_defs IN . expr
+    (38) expr -> . SELF
+    (39) expr -> . ID assign
+    (40) expr -> . expr targettype_opt DOT function_call
+    (41) expr -> . function_call
+    (42) expr -> . IF expr THEN expr ELSE expr FI
+    (43) expr -> . WHILE expr LOOP expr POOL
+    (44) expr -> . LET attr_defs IN expr
+    (45) expr -> . CASE expr OF typeactions ESAC
+    (46) expr -> . NEW TYPE
+    (47) expr -> . INT_COMP expr
+    (48) expr -> . NOT expr
+    (49) expr -> . ISVOID expr
+    (50) expr -> . expr PLUS expr
+    (51) expr -> . expr MINUS expr
+    (52) expr -> . expr MULTIPLY expr
+    (53) expr -> . expr DIVIDE expr
+    (54) expr -> . expr LESS_THAN expr
+    (55) expr -> . expr LESS_THAN_OR_EQUAL expr
+    (56) expr -> . expr EQUAL expr
+    (57) expr -> . BLOCK_INIT block BLOCK_END
+    (58) expr -> . PARENTESIS_INIT expr PARENTESIS_END
+    (59) expr -> . ID
+    (60) expr -> . INTEGER
+    (61) expr -> . STRING
+    (62) expr -> . BOOL
+    (34) function_call -> . ID PARENTESIS_INIT params_opt PARENTESIS_END
+
+    SELF            shift and go to state 41
+    ID              shift and go to state 42
+    IF              shift and go to state 44
+    WHILE           shift and go to state 45
+    LET             shift and go to state 46
+    CASE            shift and go to state 47
+    NEW             shift and go to state 48
+    INT_COMP        shift and go to state 49
+    NOT             shift and go to state 50
+    ISVOID          shift and go to state 51
+    BLOCK_INIT      shift and go to state 52
+    PARENTESIS_INIT shift and go to state 53
+    INTEGER         shift and go to state 54
+    STRING          shift and go to state 55
+    BOOL            shift and go to state 56
+
+    expr                           shift and go to state 114
+    function_call                  shift and go to state 43
+
+state 102
+
+    (14) attr_defs -> attr_def COMMA . attr_defs
+    (13) attr_defs -> . attr_def
+    (14) attr_defs -> . attr_def COMMA attr_defs
+    (15) attr_def -> . ID COLON TYPE assign_opt
+
+    ID              shift and go to state 75
+
+    attr_def                       shift and go to state 74
+    attr_defs                      shift and go to state 115
+
+state 103
+
+    (45) expr -> CASE expr OF . typeactions ESAC
+    (31) typeactions -> . typeaction
+    (32) typeactions -> . typeaction typeactions
+    (33) typeaction -> . ID COLON TYPE ACTION expr SEMICOLON
+
+    ID              shift and go to state 118
+
+    typeactions                    shift and go to state 116
+    typeaction                     shift and go to state 117
+
+state 104
+
+    (57) expr -> BLOCK_INIT block BLOCK_END .
+
+    PLUS            reduce using rule 57 (expr -> BLOCK_INIT block BLOCK_END .)
+    MINUS           reduce using rule 57 (expr -> BLOCK_INIT block BLOCK_END .)
+    MULTIPLY        reduce using rule 57 (expr -> BLOCK_INIT block BLOCK_END .)
+    DIVIDE          reduce using rule 57 (expr -> BLOCK_INIT block BLOCK_END .)
+    LESS_THAN       reduce using rule 57 (expr -> BLOCK_INIT block BLOCK_END .)
+    LESS_THAN_OR_EQUAL reduce using rule 57 (expr -> BLOCK_INIT block BLOCK_END .)
+    EQUAL           reduce using rule 57 (expr -> BLOCK_INIT block BLOCK_END .)
+    AT              reduce using rule 57 (expr -> BLOCK_INIT block BLOCK_END .)
+    DOT             reduce using rule 57 (expr -> BLOCK_INIT block BLOCK_END .)
+    SEMICOLON       reduce using rule 57 (expr -> BLOCK_INIT block BLOCK_END .)
+    COMMA           reduce using rule 57 (expr -> BLOCK_INIT block BLOCK_END .)
+    IN              reduce using rule 57 (expr -> BLOCK_INIT block BLOCK_END .)
+    THEN            reduce using rule 57 (expr -> BLOCK_INIT block BLOCK_END .)
+    LOOP            reduce using rule 57 (expr -> BLOCK_INIT block BLOCK_END .)
+    OF              reduce using rule 57 (expr -> BLOCK_INIT block BLOCK_END .)
+    PARENTESIS_END  reduce using rule 57 (expr -> BLOCK_INIT block BLOCK_END .)
+    BLOCK_END       reduce using rule 57 (expr -> BLOCK_INIT block BLOCK_END .)
+    ELSE            reduce using rule 57 (expr -> BLOCK_INIT block BLOCK_END .)
+    POOL            reduce using rule 57 (expr -> BLOCK_INIT block BLOCK_END .)
+    FI              reduce using rule 57 (expr -> BLOCK_INIT block BLOCK_END .)
+
+
+state 105
+
+    (29) blockelements -> expr SEMICOLON .
+    (30) blockelements -> expr SEMICOLON . blockelements
+    (29) blockelements -> . expr SEMICOLON
+    (30) blockelements -> . expr SEMICOLON blockelements
+    (38) expr -> . SELF
+    (39) expr -> . ID assign
+    (40) expr -> . expr targettype_opt DOT function_call
+    (41) expr -> . function_call
+    (42) expr -> . IF expr THEN expr ELSE expr FI
+    (43) expr -> . WHILE expr LOOP expr POOL
+    (44) expr -> . LET attr_defs IN expr
+    (45) expr -> . CASE expr OF typeactions ESAC
+    (46) expr -> . NEW TYPE
+    (47) expr -> . INT_COMP expr
+    (48) expr -> . NOT expr
+    (49) expr -> . ISVOID expr
+    (50) expr -> . expr PLUS expr
+    (51) expr -> . expr MINUS expr
+    (52) expr -> . expr MULTIPLY expr
+    (53) expr -> . expr DIVIDE expr
+    (54) expr -> . expr LESS_THAN expr
+    (55) expr -> . expr LESS_THAN_OR_EQUAL expr
+    (56) expr -> . expr EQUAL expr
+    (57) expr -> . BLOCK_INIT block BLOCK_END
+    (58) expr -> . PARENTESIS_INIT expr PARENTESIS_END
+    (59) expr -> . ID
+    (60) expr -> . INTEGER
+    (61) expr -> . STRING
+    (62) expr -> . BOOL
+    (34) function_call -> . ID PARENTESIS_INIT params_opt PARENTESIS_END
+
+    BLOCK_END       reduce using rule 29 (blockelements -> expr SEMICOLON .)
+    SELF            shift and go to state 41
+    ID              shift and go to state 42
+    IF              shift and go to state 44
+    WHILE           shift and go to state 45
+    LET             shift and go to state 46
+    CASE            shift and go to state 47
+    NEW             shift and go to state 48
+    INT_COMP        shift and go to state 49
+    NOT             shift and go to state 50
+    ISVOID          shift and go to state 51
+    BLOCK_INIT      shift and go to state 52
+    PARENTESIS_INIT shift and go to state 53
+    INTEGER         shift and go to state 54
+    STRING          shift and go to state 55
+    BOOL            shift and go to state 56
+
+    expr                           shift and go to state 83
+    blockelements                  shift and go to state 119
+    function_call                  shift and go to state 43
+
+state 106
+
+    (58) expr -> PARENTESIS_INIT expr PARENTESIS_END .
+
+    PLUS            reduce using rule 58 (expr -> PARENTESIS_INIT expr PARENTESIS_END .)
+    MINUS           reduce using rule 58 (expr -> PARENTESIS_INIT expr PARENTESIS_END .)
+    MULTIPLY        reduce using rule 58 (expr -> PARENTESIS_INIT expr PARENTESIS_END .)
+    DIVIDE          reduce using rule 58 (expr -> PARENTESIS_INIT expr PARENTESIS_END .)
+    LESS_THAN       reduce using rule 58 (expr -> PARENTESIS_INIT expr PARENTESIS_END .)
+    LESS_THAN_OR_EQUAL reduce using rule 58 (expr -> PARENTESIS_INIT expr PARENTESIS_END .)
+    EQUAL           reduce using rule 58 (expr -> PARENTESIS_INIT expr PARENTESIS_END .)
+    AT              reduce using rule 58 (expr -> PARENTESIS_INIT expr PARENTESIS_END .)
+    DOT             reduce using rule 58 (expr -> PARENTESIS_INIT expr PARENTESIS_END .)
+    SEMICOLON       reduce using rule 58 (expr -> PARENTESIS_INIT expr PARENTESIS_END .)
+    COMMA           reduce using rule 58 (expr -> PARENTESIS_INIT expr PARENTESIS_END .)
+    IN              reduce using rule 58 (expr -> PARENTESIS_INIT expr PARENTESIS_END .)
+    THEN            reduce using rule 58 (expr -> PARENTESIS_INIT expr PARENTESIS_END .)
+    LOOP            reduce using rule 58 (expr -> PARENTESIS_INIT expr PARENTESIS_END .)
+    OF              reduce using rule 58 (expr -> PARENTESIS_INIT expr PARENTESIS_END .)
+    PARENTESIS_END  reduce using rule 58 (expr -> PARENTESIS_INIT expr PARENTESIS_END .)
+    BLOCK_END       reduce using rule 58 (expr -> PARENTESIS_INIT expr PARENTESIS_END .)
+    ELSE            reduce using rule 58 (expr -> PARENTESIS_INIT expr PARENTESIS_END .)
+    POOL            reduce using rule 58 (expr -> PARENTESIS_INIT expr PARENTESIS_END .)
+    FI              reduce using rule 58 (expr -> PARENTESIS_INIT expr PARENTESIS_END .)
+
+
+state 107
+
+    (11) feature -> ID PARENTESIS_INIT formals_opt PARENTESIS_END COLON TYPE BLOCK_INIT expr . BLOCK_END SEMICOLON
+    (40) expr -> expr . targettype_opt DOT function_call
+    (50) expr -> expr . PLUS expr
+    (51) expr -> expr . MINUS expr
+    (52) expr -> expr . MULTIPLY expr
+    (53) expr -> expr . DIVIDE expr
+    (54) expr -> expr . LESS_THAN expr
+    (55) expr -> expr . LESS_THAN_OR_EQUAL expr
+    (56) expr -> expr . EQUAL expr
+    (35) targettype_opt -> . targettype
+    (36) targettype_opt -> . empty
+    (37) targettype -> . AT TYPE
+    (63) empty -> .
+
+    BLOCK_END       shift and go to state 120
+    PLUS            shift and go to state 59
+    MINUS           shift and go to state 60
+    MULTIPLY        shift and go to state 61
+    DIVIDE          shift and go to state 62
+    LESS_THAN       shift and go to state 63
+    LESS_THAN_OR_EQUAL shift and go to state 64
+    EQUAL           shift and go to state 65
+    AT              shift and go to state 68
+    DOT             reduce using rule 63 (empty -> .)
+
+    targettype_opt                 shift and go to state 58
+    targettype                     shift and go to state 66
+    empty                          shift and go to state 67
+
+state 108
+
+    (40) expr -> expr targettype_opt DOT function_call .
+
+    PLUS            reduce using rule 40 (expr -> expr targettype_opt DOT function_call .)
+    MINUS           reduce using rule 40 (expr -> expr targettype_opt DOT function_call .)
+    MULTIPLY        reduce using rule 40 (expr -> expr targettype_opt DOT function_call .)
+    DIVIDE          reduce using rule 40 (expr -> expr targettype_opt DOT function_call .)
+    LESS_THAN       reduce using rule 40 (expr -> expr targettype_opt DOT function_call .)
+    LESS_THAN_OR_EQUAL reduce using rule 40 (expr -> expr targettype_opt DOT function_call .)
+    EQUAL           reduce using rule 40 (expr -> expr targettype_opt DOT function_call .)
+    AT              reduce using rule 40 (expr -> expr targettype_opt DOT function_call .)
+    DOT             reduce using rule 40 (expr -> expr targettype_opt DOT function_call .)
+    SEMICOLON       reduce using rule 40 (expr -> expr targettype_opt DOT function_call .)
+    COMMA           reduce using rule 40 (expr -> expr targettype_opt DOT function_call .)
+    IN              reduce using rule 40 (expr -> expr targettype_opt DOT function_call .)
+    THEN            reduce using rule 40 (expr -> expr targettype_opt DOT function_call .)
+    LOOP            reduce using rule 40 (expr -> expr targettype_opt DOT function_call .)
+    OF              reduce using rule 40 (expr -> expr targettype_opt DOT function_call .)
+    PARENTESIS_END  reduce using rule 40 (expr -> expr targettype_opt DOT function_call .)
+    BLOCK_END       reduce using rule 40 (expr -> expr targettype_opt DOT function_call .)
+    ELSE            reduce using rule 40 (expr -> expr targettype_opt DOT function_call .)
+    POOL            reduce using rule 40 (expr -> expr targettype_opt DOT function_call .)
+    FI              reduce using rule 40 (expr -> expr targettype_opt DOT function_call .)
+
+
+state 109
+
+    (34) function_call -> ID . PARENTESIS_INIT params_opt PARENTESIS_END
+
+    PARENTESIS_INIT shift and go to state 70
+
+
+state 110
+
+    (34) function_call -> ID PARENTESIS_INIT params_opt PARENTESIS_END .
+
+    PLUS            reduce using rule 34 (function_call -> ID PARENTESIS_INIT params_opt PARENTESIS_END .)
+    MINUS           reduce using rule 34 (function_call -> ID PARENTESIS_INIT params_opt PARENTESIS_END .)
+    MULTIPLY        reduce using rule 34 (function_call -> ID PARENTESIS_INIT params_opt PARENTESIS_END .)
+    DIVIDE          reduce using rule 34 (function_call -> ID PARENTESIS_INIT params_opt PARENTESIS_END .)
+    LESS_THAN       reduce using rule 34 (function_call -> ID PARENTESIS_INIT params_opt PARENTESIS_END .)
+    LESS_THAN_OR_EQUAL reduce using rule 34 (function_call -> ID PARENTESIS_INIT params_opt PARENTESIS_END .)
+    EQUAL           reduce using rule 34 (function_call -> ID PARENTESIS_INIT params_opt PARENTESIS_END .)
+    AT              reduce using rule 34 (function_call -> ID PARENTESIS_INIT params_opt PARENTESIS_END .)
+    DOT             reduce using rule 34 (function_call -> ID PARENTESIS_INIT params_opt PARENTESIS_END .)
+    SEMICOLON       reduce using rule 34 (function_call -> ID PARENTESIS_INIT params_opt PARENTESIS_END .)
+    COMMA           reduce using rule 34 (function_call -> ID PARENTESIS_INIT params_opt PARENTESIS_END .)
+    IN              reduce using rule 34 (function_call -> ID PARENTESIS_INIT params_opt PARENTESIS_END .)
+    THEN            reduce using rule 34 (function_call -> ID PARENTESIS_INIT params_opt PARENTESIS_END .)
+    LOOP            reduce using rule 34 (function_call -> ID PARENTESIS_INIT params_opt PARENTESIS_END .)
+    OF              reduce using rule 34 (function_call -> ID PARENTESIS_INIT params_opt PARENTESIS_END .)
+    PARENTESIS_END  reduce using rule 34 (function_call -> ID PARENTESIS_INIT params_opt PARENTESIS_END .)
+    BLOCK_END       reduce using rule 34 (function_call -> ID PARENTESIS_INIT params_opt PARENTESIS_END .)
+    ELSE            reduce using rule 34 (function_call -> ID PARENTESIS_INIT params_opt PARENTESIS_END .)
+    POOL            reduce using rule 34 (function_call -> ID PARENTESIS_INIT params_opt PARENTESIS_END .)
+    FI              reduce using rule 34 (function_call -> ID PARENTESIS_INIT params_opt PARENTESIS_END .)
+
+
+state 111
+
+    (27) params -> expr COMMA . params
+    (26) params -> . expr
+    (27) params -> . expr COMMA params
+    (38) expr -> . SELF
+    (39) expr -> . ID assign
+    (40) expr -> . expr targettype_opt DOT function_call
+    (41) expr -> . function_call
+    (42) expr -> . IF expr THEN expr ELSE expr FI
+    (43) expr -> . WHILE expr LOOP expr POOL
+    (44) expr -> . LET attr_defs IN expr
+    (45) expr -> . CASE expr OF typeactions ESAC
+    (46) expr -> . NEW TYPE
+    (47) expr -> . INT_COMP expr
+    (48) expr -> . NOT expr
+    (49) expr -> . ISVOID expr
+    (50) expr -> . expr PLUS expr
+    (51) expr -> . expr MINUS expr
+    (52) expr -> . expr MULTIPLY expr
+    (53) expr -> . expr DIVIDE expr
+    (54) expr -> . expr LESS_THAN expr
+    (55) expr -> . expr LESS_THAN_OR_EQUAL expr
+    (56) expr -> . expr EQUAL expr
+    (57) expr -> . BLOCK_INIT block BLOCK_END
+    (58) expr -> . PARENTESIS_INIT expr PARENTESIS_END
+    (59) expr -> . ID
+    (60) expr -> . INTEGER
+    (61) expr -> . STRING
+    (62) expr -> . BOOL
+    (34) function_call -> . ID PARENTESIS_INIT params_opt PARENTESIS_END
+
+    SELF            shift and go to state 41
+    ID              shift and go to state 42
+    IF              shift and go to state 44
+    WHILE           shift and go to state 45
+    LET             shift and go to state 46
+    CASE            shift and go to state 47
+    NEW             shift and go to state 48
+    INT_COMP        shift and go to state 49
+    NOT             shift and go to state 50
+    ISVOID          shift and go to state 51
+    BLOCK_INIT      shift and go to state 52
+    PARENTESIS_INIT shift and go to state 53
+    INTEGER         shift and go to state 54
+    STRING          shift and go to state 55
+    BOOL            shift and go to state 56
+
+    expr                           shift and go to state 98
+    params                         shift and go to state 121
+    function_call                  shift and go to state 43
+
+state 112
+
+    (42) expr -> IF expr THEN expr . ELSE expr FI
+    (40) expr -> expr . targettype_opt DOT function_call
+    (50) expr -> expr . PLUS expr
+    (51) expr -> expr . MINUS expr
+    (52) expr -> expr . MULTIPLY expr
+    (53) expr -> expr . DIVIDE expr
+    (54) expr -> expr . LESS_THAN expr
+    (55) expr -> expr . LESS_THAN_OR_EQUAL expr
+    (56) expr -> expr . EQUAL expr
+    (35) targettype_opt -> . targettype
+    (36) targettype_opt -> . empty
+    (37) targettype -> . AT TYPE
+    (63) empty -> .
+
+    ELSE            shift and go to state 122
+    PLUS            shift and go to state 59
+    MINUS           shift and go to state 60
+    MULTIPLY        shift and go to state 61
+    DIVIDE          shift and go to state 62
+    LESS_THAN       shift and go to state 63
+    LESS_THAN_OR_EQUAL shift and go to state 64
+    EQUAL           shift and go to state 65
+    AT              shift and go to state 68
+    DOT             reduce using rule 63 (empty -> .)
+
+    targettype_opt                 shift and go to state 58
+    targettype                     shift and go to state 66
+    empty                          shift and go to state 67
+
+state 113
+
+    (43) expr -> WHILE expr LOOP expr . POOL
+    (40) expr -> expr . targettype_opt DOT function_call
+    (50) expr -> expr . PLUS expr
+    (51) expr -> expr . MINUS expr
+    (52) expr -> expr . MULTIPLY expr
+    (53) expr -> expr . DIVIDE expr
+    (54) expr -> expr . LESS_THAN expr
+    (55) expr -> expr . LESS_THAN_OR_EQUAL expr
+    (56) expr -> expr . EQUAL expr
+    (35) targettype_opt -> . targettype
+    (36) targettype_opt -> . empty
+    (37) targettype -> . AT TYPE
+    (63) empty -> .
+
+    POOL            shift and go to state 123
+    PLUS            shift and go to state 59
+    MINUS           shift and go to state 60
+    MULTIPLY        shift and go to state 61
+    DIVIDE          shift and go to state 62
+    LESS_THAN       shift and go to state 63
+    LESS_THAN_OR_EQUAL shift and go to state 64
+    EQUAL           shift and go to state 65
+    AT              shift and go to state 68
+    DOT             reduce using rule 63 (empty -> .)
+
+    targettype_opt                 shift and go to state 58
+    targettype                     shift and go to state 66
+    empty                          shift and go to state 67
+
+state 114
+
+    (44) expr -> LET attr_defs IN expr .
+    (40) expr -> expr . targettype_opt DOT function_call
+    (50) expr -> expr . PLUS expr
+    (51) expr -> expr . MINUS expr
+    (52) expr -> expr . MULTIPLY expr
+    (53) expr -> expr . DIVIDE expr
+    (54) expr -> expr . LESS_THAN expr
+    (55) expr -> expr . LESS_THAN_OR_EQUAL expr
+    (56) expr -> expr . EQUAL expr
+    (35) targettype_opt -> . targettype
+    (36) targettype_opt -> . empty
+    (37) targettype -> . AT TYPE
+    (63) empty -> .
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for MULTIPLY resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for LESS_THAN resolved as shift
+  ! shift/reduce conflict for LESS_THAN_OR_EQUAL resolved as shift
+  ! shift/reduce conflict for EQUAL resolved as shift
+  ! shift/reduce conflict for AT resolved as shift
+  ! reduce/reduce conflict for DOT resolved using rule 44 (expr -> LET attr_defs IN expr .)
+    DOT             reduce using rule 44 (expr -> LET attr_defs IN expr .)
+    SEMICOLON       reduce using rule 44 (expr -> LET attr_defs IN expr .)
+    COMMA           reduce using rule 44 (expr -> LET attr_defs IN expr .)
+    IN              reduce using rule 44 (expr -> LET attr_defs IN expr .)
+    THEN            reduce using rule 44 (expr -> LET attr_defs IN expr .)
+    LOOP            reduce using rule 44 (expr -> LET attr_defs IN expr .)
+    OF              reduce using rule 44 (expr -> LET attr_defs IN expr .)
+    PARENTESIS_END  reduce using rule 44 (expr -> LET attr_defs IN expr .)
+    BLOCK_END       reduce using rule 44 (expr -> LET attr_defs IN expr .)
+    ELSE            reduce using rule 44 (expr -> LET attr_defs IN expr .)
+    POOL            reduce using rule 44 (expr -> LET attr_defs IN expr .)
+    FI              reduce using rule 44 (expr -> LET attr_defs IN expr .)
+    PLUS            shift and go to state 59
+    MINUS           shift and go to state 60
+    MULTIPLY        shift and go to state 61
+    DIVIDE          shift and go to state 62
+    LESS_THAN       shift and go to state 63
+    LESS_THAN_OR_EQUAL shift and go to state 64
+    EQUAL           shift and go to state 65
+    AT              shift and go to state 68
+
+  ! PLUS            [ reduce using rule 44 (expr -> LET attr_defs IN expr .) ]
+  ! MINUS           [ reduce using rule 44 (expr -> LET attr_defs IN expr .) ]
+  ! MULTIPLY        [ reduce using rule 44 (expr -> LET attr_defs IN expr .) ]
+  ! DIVIDE          [ reduce using rule 44 (expr -> LET attr_defs IN expr .) ]
+  ! LESS_THAN       [ reduce using rule 44 (expr -> LET attr_defs IN expr .) ]
+  ! LESS_THAN_OR_EQUAL [ reduce using rule 44 (expr -> LET attr_defs IN expr .) ]
+  ! EQUAL           [ reduce using rule 44 (expr -> LET attr_defs IN expr .) ]
+  ! AT              [ reduce using rule 44 (expr -> LET attr_defs IN expr .) ]
+  ! DOT             [ reduce using rule 63 (empty -> .) ]
+
+    targettype_opt                 shift and go to state 58
+    targettype                     shift and go to state 66
+    empty                          shift and go to state 67
+
+state 115
+
+    (14) attr_defs -> attr_def COMMA attr_defs .
+
+    IN              reduce using rule 14 (attr_defs -> attr_def COMMA attr_defs .)
+
+
+state 116
+
+    (45) expr -> CASE expr OF typeactions . ESAC
+
+    ESAC            shift and go to state 124
+
+
+state 117
+
+    (31) typeactions -> typeaction .
+    (32) typeactions -> typeaction . typeactions
+    (31) typeactions -> . typeaction
+    (32) typeactions -> . typeaction typeactions
+    (33) typeaction -> . ID COLON TYPE ACTION expr SEMICOLON
+
+    ESAC            reduce using rule 31 (typeactions -> typeaction .)
+    ID              shift and go to state 118
+
+    typeaction                     shift and go to state 117
+    typeactions                    shift and go to state 125
+
+state 118
+
+    (33) typeaction -> ID . COLON TYPE ACTION expr SEMICOLON
+
+    COLON           shift and go to state 126
+
+
+state 119
+
+    (30) blockelements -> expr SEMICOLON blockelements .
+
+    BLOCK_END       reduce using rule 30 (blockelements -> expr SEMICOLON blockelements .)
+
+
+state 120
+
+    (11) feature -> ID PARENTESIS_INIT formals_opt PARENTESIS_END COLON TYPE BLOCK_INIT expr BLOCK_END . SEMICOLON
+
+    SEMICOLON       shift and go to state 127
+
+
+state 121
+
+    (27) params -> expr COMMA params .
+
+    PARENTESIS_END  reduce using rule 27 (params -> expr COMMA params .)
+
+
+state 122
+
+    (42) expr -> IF expr THEN expr ELSE . expr FI
+    (38) expr -> . SELF
+    (39) expr -> . ID assign
+    (40) expr -> . expr targettype_opt DOT function_call
+    (41) expr -> . function_call
+    (42) expr -> . IF expr THEN expr ELSE expr FI
+    (43) expr -> . WHILE expr LOOP expr POOL
+    (44) expr -> . LET attr_defs IN expr
+    (45) expr -> . CASE expr OF typeactions ESAC
+    (46) expr -> . NEW TYPE
+    (47) expr -> . INT_COMP expr
+    (48) expr -> . NOT expr
+    (49) expr -> . ISVOID expr
+    (50) expr -> . expr PLUS expr
+    (51) expr -> . expr MINUS expr
+    (52) expr -> . expr MULTIPLY expr
+    (53) expr -> . expr DIVIDE expr
+    (54) expr -> . expr LESS_THAN expr
+    (55) expr -> . expr LESS_THAN_OR_EQUAL expr
+    (56) expr -> . expr EQUAL expr
+    (57) expr -> . BLOCK_INIT block BLOCK_END
+    (58) expr -> . PARENTESIS_INIT expr PARENTESIS_END
+    (59) expr -> . ID
+    (60) expr -> . INTEGER
+    (61) expr -> . STRING
+    (62) expr -> . BOOL
+    (34) function_call -> . ID PARENTESIS_INIT params_opt PARENTESIS_END
+
+    SELF            shift and go to state 41
+    ID              shift and go to state 42
+    IF              shift and go to state 44
+    WHILE           shift and go to state 45
+    LET             shift and go to state 46
+    CASE            shift and go to state 47
+    NEW             shift and go to state 48
+    INT_COMP        shift and go to state 49
+    NOT             shift and go to state 50
+    ISVOID          shift and go to state 51
+    BLOCK_INIT      shift and go to state 52
+    PARENTESIS_INIT shift and go to state 53
+    INTEGER         shift and go to state 54
+    STRING          shift and go to state 55
+    BOOL            shift and go to state 56
+
+    expr                           shift and go to state 128
+    function_call                  shift and go to state 43
+
+state 123
+
+    (43) expr -> WHILE expr LOOP expr POOL .
+
+    PLUS            reduce using rule 43 (expr -> WHILE expr LOOP expr POOL .)
+    MINUS           reduce using rule 43 (expr -> WHILE expr LOOP expr POOL .)
+    MULTIPLY        reduce using rule 43 (expr -> WHILE expr LOOP expr POOL .)
+    DIVIDE          reduce using rule 43 (expr -> WHILE expr LOOP expr POOL .)
+    LESS_THAN       reduce using rule 43 (expr -> WHILE expr LOOP expr POOL .)
+    LESS_THAN_OR_EQUAL reduce using rule 43 (expr -> WHILE expr LOOP expr POOL .)
+    EQUAL           reduce using rule 43 (expr -> WHILE expr LOOP expr POOL .)
+    AT              reduce using rule 43 (expr -> WHILE expr LOOP expr POOL .)
+    DOT             reduce using rule 43 (expr -> WHILE expr LOOP expr POOL .)
+    SEMICOLON       reduce using rule 43 (expr -> WHILE expr LOOP expr POOL .)
+    COMMA           reduce using rule 43 (expr -> WHILE expr LOOP expr POOL .)
+    IN              reduce using rule 43 (expr -> WHILE expr LOOP expr POOL .)
+    THEN            reduce using rule 43 (expr -> WHILE expr LOOP expr POOL .)
+    LOOP            reduce using rule 43 (expr -> WHILE expr LOOP expr POOL .)
+    OF              reduce using rule 43 (expr -> WHILE expr LOOP expr POOL .)
+    PARENTESIS_END  reduce using rule 43 (expr -> WHILE expr LOOP expr POOL .)
+    BLOCK_END       reduce using rule 43 (expr -> WHILE expr LOOP expr POOL .)
+    ELSE            reduce using rule 43 (expr -> WHILE expr LOOP expr POOL .)
+    POOL            reduce using rule 43 (expr -> WHILE expr LOOP expr POOL .)
+    FI              reduce using rule 43 (expr -> WHILE expr LOOP expr POOL .)
+
+
+state 124
+
+    (45) expr -> CASE expr OF typeactions ESAC .
+
+    PLUS            reduce using rule 45 (expr -> CASE expr OF typeactions ESAC .)
+    MINUS           reduce using rule 45 (expr -> CASE expr OF typeactions ESAC .)
+    MULTIPLY        reduce using rule 45 (expr -> CASE expr OF typeactions ESAC .)
+    DIVIDE          reduce using rule 45 (expr -> CASE expr OF typeactions ESAC .)
+    LESS_THAN       reduce using rule 45 (expr -> CASE expr OF typeactions ESAC .)
+    LESS_THAN_OR_EQUAL reduce using rule 45 (expr -> CASE expr OF typeactions ESAC .)
+    EQUAL           reduce using rule 45 (expr -> CASE expr OF typeactions ESAC .)
+    AT              reduce using rule 45 (expr -> CASE expr OF typeactions ESAC .)
+    DOT             reduce using rule 45 (expr -> CASE expr OF typeactions ESAC .)
+    SEMICOLON       reduce using rule 45 (expr -> CASE expr OF typeactions ESAC .)
+    COMMA           reduce using rule 45 (expr -> CASE expr OF typeactions ESAC .)
+    IN              reduce using rule 45 (expr -> CASE expr OF typeactions ESAC .)
+    THEN            reduce using rule 45 (expr -> CASE expr OF typeactions ESAC .)
+    LOOP            reduce using rule 45 (expr -> CASE expr OF typeactions ESAC .)
+    OF              reduce using rule 45 (expr -> CASE expr OF typeactions ESAC .)
+    PARENTESIS_END  reduce using rule 45 (expr -> CASE expr OF typeactions ESAC .)
+    BLOCK_END       reduce using rule 45 (expr -> CASE expr OF typeactions ESAC .)
+    ELSE            reduce using rule 45 (expr -> CASE expr OF typeactions ESAC .)
+    POOL            reduce using rule 45 (expr -> CASE expr OF typeactions ESAC .)
+    FI              reduce using rule 45 (expr -> CASE expr OF typeactions ESAC .)
+
+
+state 125
+
+    (32) typeactions -> typeaction typeactions .
+
+    ESAC            reduce using rule 32 (typeactions -> typeaction typeactions .)
+
+
+state 126
+
+    (33) typeaction -> ID COLON . TYPE ACTION expr SEMICOLON
+
+    TYPE            shift and go to state 129
+
+
+state 127
+
+    (11) feature -> ID PARENTESIS_INIT formals_opt PARENTESIS_END COLON TYPE BLOCK_INIT expr BLOCK_END SEMICOLON .
+
+    ID              reduce using rule 11 (feature -> ID PARENTESIS_INIT formals_opt PARENTESIS_END COLON TYPE BLOCK_INIT expr BLOCK_END SEMICOLON .)
+    BLOCK_END       reduce using rule 11 (feature -> ID PARENTESIS_INIT formals_opt PARENTESIS_END COLON TYPE BLOCK_INIT expr BLOCK_END SEMICOLON .)
+
+
+state 128
+
+    (42) expr -> IF expr THEN expr ELSE expr . FI
+    (40) expr -> expr . targettype_opt DOT function_call
+    (50) expr -> expr . PLUS expr
+    (51) expr -> expr . MINUS expr
+    (52) expr -> expr . MULTIPLY expr
+    (53) expr -> expr . DIVIDE expr
+    (54) expr -> expr . LESS_THAN expr
+    (55) expr -> expr . LESS_THAN_OR_EQUAL expr
+    (56) expr -> expr . EQUAL expr
+    (35) targettype_opt -> . targettype
+    (36) targettype_opt -> . empty
+    (37) targettype -> . AT TYPE
+    (63) empty -> .
+
+    FI              shift and go to state 130
+    PLUS            shift and go to state 59
+    MINUS           shift and go to state 60
+    MULTIPLY        shift and go to state 61
+    DIVIDE          shift and go to state 62
+    LESS_THAN       shift and go to state 63
+    LESS_THAN_OR_EQUAL shift and go to state 64
+    EQUAL           shift and go to state 65
+    AT              shift and go to state 68
+    DOT             reduce using rule 63 (empty -> .)
+
+    targettype_opt                 shift and go to state 58
+    targettype                     shift and go to state 66
+    empty                          shift and go to state 67
+
+state 129
+
+    (33) typeaction -> ID COLON TYPE . ACTION expr SEMICOLON
+
+    ACTION          shift and go to state 131
+
+
+state 130
+
+    (42) expr -> IF expr THEN expr ELSE expr FI .
+
+    PLUS            reduce using rule 42 (expr -> IF expr THEN expr ELSE expr FI .)
+    MINUS           reduce using rule 42 (expr -> IF expr THEN expr ELSE expr FI .)
+    MULTIPLY        reduce using rule 42 (expr -> IF expr THEN expr ELSE expr FI .)
+    DIVIDE          reduce using rule 42 (expr -> IF expr THEN expr ELSE expr FI .)
+    LESS_THAN       reduce using rule 42 (expr -> IF expr THEN expr ELSE expr FI .)
+    LESS_THAN_OR_EQUAL reduce using rule 42 (expr -> IF expr THEN expr ELSE expr FI .)
+    EQUAL           reduce using rule 42 (expr -> IF expr THEN expr ELSE expr FI .)
+    AT              reduce using rule 42 (expr -> IF expr THEN expr ELSE expr FI .)
+    DOT             reduce using rule 42 (expr -> IF expr THEN expr ELSE expr FI .)
+    SEMICOLON       reduce using rule 42 (expr -> IF expr THEN expr ELSE expr FI .)
+    COMMA           reduce using rule 42 (expr -> IF expr THEN expr ELSE expr FI .)
+    IN              reduce using rule 42 (expr -> IF expr THEN expr ELSE expr FI .)
+    THEN            reduce using rule 42 (expr -> IF expr THEN expr ELSE expr FI .)
+    LOOP            reduce using rule 42 (expr -> IF expr THEN expr ELSE expr FI .)
+    OF              reduce using rule 42 (expr -> IF expr THEN expr ELSE expr FI .)
+    PARENTESIS_END  reduce using rule 42 (expr -> IF expr THEN expr ELSE expr FI .)
+    BLOCK_END       reduce using rule 42 (expr -> IF expr THEN expr ELSE expr FI .)
+    ELSE            reduce using rule 42 (expr -> IF expr THEN expr ELSE expr FI .)
+    POOL            reduce using rule 42 (expr -> IF expr THEN expr ELSE expr FI .)
+    FI              reduce using rule 42 (expr -> IF expr THEN expr ELSE expr FI .)
+
+
+state 131
+
+    (33) typeaction -> ID COLON TYPE ACTION . expr SEMICOLON
+    (38) expr -> . SELF
+    (39) expr -> . ID assign
+    (40) expr -> . expr targettype_opt DOT function_call
+    (41) expr -> . function_call
+    (42) expr -> . IF expr THEN expr ELSE expr FI
+    (43) expr -> . WHILE expr LOOP expr POOL
+    (44) expr -> . LET attr_defs IN expr
+    (45) expr -> . CASE expr OF typeactions ESAC
+    (46) expr -> . NEW TYPE
+    (47) expr -> . INT_COMP expr
+    (48) expr -> . NOT expr
+    (49) expr -> . ISVOID expr
+    (50) expr -> . expr PLUS expr
+    (51) expr -> . expr MINUS expr
+    (52) expr -> . expr MULTIPLY expr
+    (53) expr -> . expr DIVIDE expr
+    (54) expr -> . expr LESS_THAN expr
+    (55) expr -> . expr LESS_THAN_OR_EQUAL expr
+    (56) expr -> . expr EQUAL expr
+    (57) expr -> . BLOCK_INIT block BLOCK_END
+    (58) expr -> . PARENTESIS_INIT expr PARENTESIS_END
+    (59) expr -> . ID
+    (60) expr -> . INTEGER
+    (61) expr -> . STRING
+    (62) expr -> . BOOL
+    (34) function_call -> . ID PARENTESIS_INIT params_opt PARENTESIS_END
+
+    SELF            shift and go to state 41
+    ID              shift and go to state 42
+    IF              shift and go to state 44
+    WHILE           shift and go to state 45
+    LET             shift and go to state 46
+    CASE            shift and go to state 47
+    NEW             shift and go to state 48
+    INT_COMP        shift and go to state 49
+    NOT             shift and go to state 50
+    ISVOID          shift and go to state 51
+    BLOCK_INIT      shift and go to state 52
+    PARENTESIS_INIT shift and go to state 53
+    INTEGER         shift and go to state 54
+    STRING          shift and go to state 55
+    BOOL            shift and go to state 56
+
+    expr                           shift and go to state 132
+    function_call                  shift and go to state 43
+
+state 132
+
+    (33) typeaction -> ID COLON TYPE ACTION expr . SEMICOLON
+    (40) expr -> expr . targettype_opt DOT function_call
+    (50) expr -> expr . PLUS expr
+    (51) expr -> expr . MINUS expr
+    (52) expr -> expr . MULTIPLY expr
+    (53) expr -> expr . DIVIDE expr
+    (54) expr -> expr . LESS_THAN expr
+    (55) expr -> expr . LESS_THAN_OR_EQUAL expr
+    (56) expr -> expr . EQUAL expr
+    (35) targettype_opt -> . targettype
+    (36) targettype_opt -> . empty
+    (37) targettype -> . AT TYPE
+    (63) empty -> .
+
+    SEMICOLON       shift and go to state 133
+    PLUS            shift and go to state 59
+    MINUS           shift and go to state 60
+    MULTIPLY        shift and go to state 61
+    DIVIDE          shift and go to state 62
+    LESS_THAN       shift and go to state 63
+    LESS_THAN_OR_EQUAL shift and go to state 64
+    EQUAL           shift and go to state 65
+    AT              shift and go to state 68
+    DOT             reduce using rule 63 (empty -> .)
+
+    targettype_opt                 shift and go to state 58
+    targettype                     shift and go to state 66
+    empty                          shift and go to state 67
+
+state 133
+
+    (33) typeaction -> ID COLON TYPE ACTION expr SEMICOLON .
+
+    ID              reduce using rule 33 (typeaction -> ID COLON TYPE ACTION expr SEMICOLON .)
+    ESAC            reduce using rule 33 (typeaction -> ID COLON TYPE ACTION expr SEMICOLON .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for PLUS in state 114 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 114 resolved as shift
+WARNING: shift/reduce conflict for MULTIPLY in state 114 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 114 resolved as shift
+WARNING: shift/reduce conflict for LESS_THAN in state 114 resolved as shift
+WARNING: shift/reduce conflict for LESS_THAN_OR_EQUAL in state 114 resolved as shift
+WARNING: shift/reduce conflict for EQUAL in state 114 resolved as shift
+WARNING: shift/reduce conflict for AT in state 114 resolved as shift
+WARNING: reduce/reduce conflict in state 40 resolved using rule (assign -> ASSIGN expr)
+WARNING: rejected rule (empty -> <empty>) in state 40
+WARNING: reduce/reduce conflict in state 78 resolved using rule (expr -> INT_COMP expr)
+WARNING: rejected rule (empty -> <empty>) in state 78
+WARNING: reduce/reduce conflict in state 79 resolved using rule (expr -> NOT expr)
+WARNING: rejected rule (empty -> <empty>) in state 79
+WARNING: reduce/reduce conflict in state 80 resolved using rule (expr -> ISVOID expr)
+WARNING: rejected rule (empty -> <empty>) in state 80
+WARNING: reduce/reduce conflict in state 87 resolved using rule (expr -> expr PLUS expr)
+WARNING: rejected rule (empty -> <empty>) in state 87
+WARNING: reduce/reduce conflict in state 88 resolved using rule (expr -> expr MINUS expr)
+WARNING: rejected rule (empty -> <empty>) in state 88
+WARNING: reduce/reduce conflict in state 89 resolved using rule (expr -> expr MULTIPLY expr)
+WARNING: rejected rule (empty -> <empty>) in state 89
+WARNING: reduce/reduce conflict in state 90 resolved using rule (expr -> expr DIVIDE expr)
+WARNING: rejected rule (empty -> <empty>) in state 90
+WARNING: reduce/reduce conflict in state 91 resolved using rule (expr -> expr LESS_THAN expr)
+WARNING: rejected rule (empty -> <empty>) in state 91
+WARNING: reduce/reduce conflict in state 92 resolved using rule (expr -> expr LESS_THAN_OR_EQUAL expr)
+WARNING: rejected rule (empty -> <empty>) in state 92
+WARNING: reduce/reduce conflict in state 93 resolved using rule (expr -> expr EQUAL expr)
+WARNING: rejected rule (empty -> <empty>) in state 93
+WARNING: reduce/reduce conflict in state 114 resolved using rule (expr -> LET attr_defs IN expr)
+WARNING: rejected rule (empty -> <empty>) in state 114

@@ -1,0 +1,4 @@
+@main {
+	y: int = const 0
+	x: bool = const False
+	response : int = add 4 3 
